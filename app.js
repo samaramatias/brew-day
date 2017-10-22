@@ -50,6 +50,7 @@
     app.use('/css', express.static(`${client_files_path}/css`));
     app.use('/fonts', express.static(`${client_main_path}/fonts`));
     app.use('/view', express.static(`${client_main_path}/view`));
+    app.use('/config', express.static(`${client_main_path}/config`));
     app.use('/resources', express.static(`${client_path}/resources`));
     app.use('/img', express.static(img_path));
 
