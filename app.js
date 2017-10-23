@@ -1,12 +1,14 @@
 'use strict';
 
-(function () {
+(() => {
     const express = require('express');
     const morgan = require('morgan');
     const bodyParser = require('body-parser');
     const cors = require('cors');
     const errorHandler = require('errorhandler');
     const mongoose = require('mongoose');
+
+    const routesMiddleware = require('./server/src/main/middleware/routesMiddleware');
 
     const server_port = process.env.PORT || 8080;
     const is_production = process.env.NODE_ENV === 'production';
@@ -53,23 +55,9 @@
     app.use('/config', express.static(`${client_main_path}/config`));
     app.use('/resources', express.static(`${client_path}/resources`));
     app.use('/img', express.static(img_path));
-
     app.use('/node_modules', express.static(`${__dirname}/node_modules`));
 
-    /* TODO: Configure express sessions. */
-    /* TODO: Configure REST routes. */
-
-    app.get('/app*', (req, res) => {
-        res.sendFile(`${client_files_path}/index.html`);
-    });
-
-    app.get('/', (req, res) => {
-        res.sendFile(`${client_files_path}/index.html`);
-    });
-
-    app.post('/', (req, res) => {
-        res.sendFile(`${client_files_path}/index.html`);
-    });
+    routesMiddleware.set(app, client_files_path);
 
     app.listener = app.listen(server_port, () => {
         console.log(`Server listening on port ${app.listener.address().port}.`);
