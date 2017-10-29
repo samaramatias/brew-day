@@ -1,31 +1,30 @@
 'use strict';
 
-(() => {
-    const express = require('express');
-    const morgan = require('morgan');
-    const bodyParser = require('body-parser');
-    const cors = require('cors');
-    const errorHandler = require('errorhandler');
-    const mongoose = require('mongoose');
+(function () {
+    require('dotenv').config();
 
-    const routesMiddleware = require('./server/src/main/middleware/routesMiddleware');
+    var express = require('express');
+    var morgan = require('morgan');
+    var bodyParser = require('body-parser');
+    var cors = require('cors');
+    var errorHandler = require('errorhandler');
+    var mongoose = require('mongoose');
 
-    const server_port = process.env.PORT || 8080;
-    const is_production = process.env.NODE_ENV === 'production';
+    var routesMiddleware = require('./server/src/main/middleware/routesMiddleware');
 
-    const client_main_path = `${__dirname}/client/src/main/`;
-    const client_dist_path = `${__dirname}/client/dist/`;
-    const client_path = `${__dirname}/client/`;
-    const img_path = `${__dirname}/img/`;
+    var server_port = process.env.PORT || 8080;
+    var is_production = process.env.NODE_ENV === 'production';
 
-    const client_files_path = is_production ? client_dist_path : client_main_path;
+    var client_main_path = __dirname + '/client/src/main/';
+    var client_path = __dirname + '/client/';
+    var img_path = __dirname + '/img/';
 
-    const app = express();
+    var app = express();
 
-    let dbConn;
+    var dbConn;
 
     if (is_production) {
-        dbConn = mongoose.connect(`${process.env.MONGODB_ADDRESS}/BREWDAY`, {useMongoClient: true});
+        dbConn = mongoose.connect(process.env.MONGODB_ADDRESS + '/BREWDAY', {useMongoClient: true});
     } else {
         dbConn = mongoose.connect('mongodb://127.0.0.1:27017/BREWDAY-TESTDB', {useMongoClient: true});
         mongoose.set('debug', true);
@@ -33,10 +32,10 @@
         app.use(errorHandler());
     }
 
-    dbConn.once('error', (e) => {
+    dbConn.once('error', function (e) {
         console.error(e);
     });
-    dbConn.once('open', () => {
+    dbConn.once('open', function () {
         console.log('DB connection established.');
     });
 
@@ -48,18 +47,17 @@
     app.set('port', server_port);
     app.set('address', process.env.ADDRESS || '127.0.0.1');
 
-    app.use('/js', express.static(`${client_files_path}/js`));
-    app.use('/css', express.static(`${client_files_path}/css`));
-    app.use('/fonts', express.static(`${client_main_path}/fonts`));
-    app.use('/view', express.static(`${client_main_path}/view`));
-    app.use('/config', express.static(`${client_main_path}/config`));
-    app.use('/resources', express.static(`${client_path}/resources`));
+    app.use('/js', express.static(client_main_path + '/js'));
+    app.use('/css', express.static(client_main_path + '/css'));
+    app.use('/view', express.static(client_main_path + '/view'));
+    app.use('/config', express.static(client_main_path + 'config'));
+    app.use('/lib', express.static(client_path + '/lib'));
     app.use('/img', express.static(img_path));
-    app.use('/node_modules', express.static(`${__dirname}/node_modules`));
+    app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
-    routesMiddleware.set(app, client_files_path);
+    routesMiddleware.set(app, client_main_path);
 
-    app.listener = app.listen(server_port, () => {
-        console.log(`Server listening on port ${app.listener.address().port}.`);
+    app.listener = app.listen(server_port, function () {
+        console.log('Server listening on port ' + app.listener.address().port + '.');
     });
 })();

@@ -1,12 +1,12 @@
 'use strict';
 
-(() => {
-    const AuthenticationClient = require('auth0').AuthenticationClient;
-    const ManagementClient = require('auth0').ManagementClient;
-    const _ = require('../util/util');
+(function () {
+    var AuthenticationClient = require('auth0').AuthenticationClient;
+    var ManagementClient = require('auth0').ManagementClient;
+    var _ = require('../util/util');
 
-    let auth0Authentication;
-    let auth0Management;
+    var auth0Authentication;
+    var auth0Management;
 
     /**
      * Create a new instance of the AuthenticationClient.
@@ -20,10 +20,9 @@
     }
 
     function auth0ManagementInit() {
-        const options = {
-            audience: `https://${_.AUTH0.DOMAIN}/api/v2/`,
+        var options = {
+            audience: 'https://' + _.AUTH0.DOMAIN + '/api/v2/',
             scope: 'read:users read:user_idp_tokens'
         };
     }
 })();
-
