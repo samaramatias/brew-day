@@ -13,6 +13,9 @@
     _.FIRST_INDEX = 0;
     _.INVALID_INDEX = -1;
 
+    _.ONE_HOUR = 3600000;
+    _.TEN_MINUTES = _.ONE_HOUR / 60;
+
     _.AUTH0 = {
         DOMAIN: 'brewday.eu.auth0.com',
         CLIENT_ID: 'w3hplz2BJojOeIv7orTMOFexv9AFhxi9',
