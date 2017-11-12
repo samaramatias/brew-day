@@ -12,7 +12,23 @@ var LOCK_CONFIG = {
         primaryColor: "#3F51B5"
     },
     languageDictionary: {
-        title: "Brew Day!"
+        title: "Brew Day!",
+        emailInputPlaceholder: "Your email",
+        passwordInputPlaceholder: "Your password",
+        welcome: "Welcome, %s!"
     },
-    autoclose: true
+    autoclose: true,
+    allowShowPassword: true,
+    additionalSignUpFields: [{
+        name: 'full_name',
+        placeholder: 'Your full name',
+        icon: '/img/icons/account.png',
+
+        validator: function (name) {
+            return {
+                valid: name.length > 0,
+                hint: "Can't be blank"
+            };
+        }
+    }]
 };

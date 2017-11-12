@@ -10,14 +10,18 @@
             'ngMaterial',
             'ngMessages',
             'ngSanitize',
-            'auth0.auth0',
+            'auth0',
             'auth0.lock',
             'angular-storage',
             'angular-jwt',
             'angular-loading-bar',
 
             'appModule',
-            'loginModule'
+            'loginModule',
+            'authModule',
+            'userModule',
+            'mainToolbarModule',
+            'sideMenuModule'
         ]
     );
 
@@ -32,9 +36,9 @@
                     templateUrl: '/view/app.html',
                     controller: 'AppController as appCtrl',
                     resolve: {
-                        authCheck: ['angularAuth0', '$state',
-                            function (angularAuth0, $state) {
-                                if (!angularAuth0.isAuthenticated) {
+                        authCheck: ['auth', '$state',
+                            function (auth, $state) {
+                                if (!auth.isAuthenticated) {
                                     $state.go('app.login');
                                 }
                             }
@@ -45,9 +49,16 @@
                     url: '/',
                     templateUrl: '/view/login.html',
                     controller: 'LoginController as loginCtrl'
+                })
+                .state('app.recipe', {
+                    url: '/recipe'
                 });
 
             $locationProvider.html5Mode(true);
         }
     ]);
+
+    brewDayApp.run(['$rootScope', function ($rootScope) {
+        $rootScope.apiRoot = '/api';
+    }]);
 })();
