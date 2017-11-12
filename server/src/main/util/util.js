@@ -14,7 +14,7 @@
     _.INVALID_INDEX = -1;
 
     _.ONE_HOUR = 3600000;
-    _.TEN_MINUTES = _.ONE_HOUR / 60;
+    _.THIRTY_MINUTES = _.ONE_HOUR / 2;
 
     _.AUTH0 = {
         DOMAIN: 'brewday.eu.auth0.com',

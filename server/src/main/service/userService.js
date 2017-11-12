@@ -43,7 +43,7 @@
      */
     function _cleanCache(cache) {
         _.each(cache, function (element, key) {
-            if (element.touched + _.TEN_MINUTES < Date.now()) {
+            if (element.touched + _.THIRTY_MINUTES < Date.now()) {
                 delete cache[key];
             }
         });
@@ -130,7 +130,7 @@
         setInterval(function () {
             _cleanCache(_cache);
             _cleanCache(_idCache);
-        }, _.TEN_MINUTES);
+        }, _.THIRTY_MINUTES);
     })();
 
     module.exports = UserService;
