@@ -1,0 +1,37 @@
+<div id="recipes" ng-controller="recipesCtrl" layout="column">
+    <md-content layout-padding="" >
+
+        <div ng-show="recipes.length > 0" layout-align="center">
+            <table id="recipesTable">
+                <tr>
+                    <th>Recipe Name</th>
+                    <th>Equipment Volume</th>
+                    <th>Directions</th>
+                    <th>Ingredients
+                        <br>
+                        Name / Quantity / Unity
+                    </th>
+                </tr>
+                <tr ng-repeat="recipe in recipes | orderBy: 'recipe_id'">
+                    <td>{{recipe.name}}</td>
+                    <td>{{recipe.equipment_volume}}</td>
+                    <td>{{recipe.directions}}</td>
+                    <td>
+                        <table id="ingredients">
+
+                            <tr ng-repeat="ingredient in recipe.ingredients">
+                                <td>{{ingredient.name}}</td>
+                                <td>{{ingredient.quantity}}</td>
+                                <td>{{ingredient.unit}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
+
+        <md-button class="md-primary" href='/app/newRecipe'>CRIAR NOVA RECEITA</md-button>
+    </md-content>
+</div>
