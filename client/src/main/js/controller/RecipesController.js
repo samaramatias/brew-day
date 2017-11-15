@@ -1,31 +1,35 @@
 'use strict';
 
 (function () {
-    var newRecipeModule = angular.module('recipesModule', ['ngMaterial', 'ngMessages']);
+    var newRecipeModule = angular.module('recipeModule', ['ngMaterial', 'ngMessages']);
 
     /**
      * Controller of the recipes page.
      */
+    newRecipeModule.controller('RecipesController',
+        [function () {
+            var self = this;
 
-    newRecipeModule.controller('recipesCtrl', ['$scope',
-        function ($scope) {
-
-            $scope.recipes = [];
+            self.recipes = [];
 
             // após a integração com o back
+            // declarar $http nos parâmetros
             // var loadRecipes = function () {
             //     $http({
             //         method: 'GET',
             //         url: 'http://localhost:3412/recipe'
             //     }).then(function (success){
-            //         $scope.recipes = success.data;
+            //         self.recipes = success.data;
             //     },function (error){
             //         console.log(error);
             //     });
             // };
 
-            var loadRecipes = function () {
-                $scope.recipes = [{ "recipe_id":"1",
+            /**
+             * Get recipes from database
+             */
+            self.loadRecipes = function () {
+                self.recipes = [{ "recipe_id":"1",
                                     "user_id":"1",
                                     "name":"RECEITANOME",
                                     "equipment_volume":234,
@@ -54,7 +58,10 @@
                                         "unit":"litros"}]}];
             };
 
-            loadRecipes();
+            /**
+             * Initialize recipes.
+             */
+            self.loadRecipes();
         }
     ]);
 })();

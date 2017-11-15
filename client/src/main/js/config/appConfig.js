@@ -16,8 +16,7 @@
             'angular-jwt',
             'angular-loading-bar',
             'appModule',
-            'newRecipeModule',
-            'recipesModule',
+            'recipeModule',
             'loginModule',
             'authModule',
             'userModule',
@@ -55,12 +54,14 @@
                 })
                 .state('app.recipe', {
                     url: '/recipe',
-                    templateUrl: '/view/recipes.html'
-                })
+                    templateUrl: '/view/recipes.html',
+                    controller: 'RecipesController as recipesCtrl'
 
+                })
                 .state('app.newRecipe', {
                     url: '/newRecipe',
                     templateUrl: '/view/newRecipe.html',
+                    controller: 'NewRecipeController as newRecipeCtrl'
                 });
 
             $locationProvider.html5Mode(true);

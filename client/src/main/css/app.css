@@ -25,11 +25,11 @@ md-sidenav.md-closed.md-locked-open-add-active {
     padding: 8px;
 }
 
-#ingredients tr:nth-child(even), #recipesTable tr:nth-child(even){
+#ingredients tr:nth-child(even), #recipesTable tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-#ingredients tr:hover, #recipesTable tr:hover  {
+#ingredients tr:hover, #recipesTable tr:hover {
     background-color: #ddd;
 }
 
@@ -44,9 +44,7 @@ md-sidenav.md-closed.md-locked-open-add-active {
 #newRecipe {
     background-color: lightgrey;
     margin: 0 auto;
-
 }
-
 
 .img-circle {
     border-radius: 50%;
@@ -59,10 +57,11 @@ md-sidenav.md-closed.md-locked-open-add-active {
 }
 
 .inputdemoErrors .inputErrorsApp {
-    min-height: 48px; }
+    min-height: 48px;
+}
 
 .inputdemoErrors md-input-container > p {
     font-size: 0.8em;
     text-align: left;
-    width: 100%; }
-
+    width: 100%;
+}

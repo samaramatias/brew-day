@@ -1,7 +1,7 @@
-<div id="recipes" ng-controller="recipesCtrl" layout="column">
+<div id="recipes" layout="column">
     <md-content layout-padding="" >
 
-        <div ng-show="recipes.length > 0" layout-align="center">
+        <div ng-show="recipesCtrl.recipes.length > 0" layout-align="center">
             <table id="recipesTable">
                 <tr>
                     <th>Recipe Name</th>
@@ -12,7 +12,7 @@
                         Name / Quantity / Unity
                     </th>
                 </tr>
-                <tr ng-repeat="recipe in recipes | orderBy: 'recipe_id'">
+                <tr ng-repeat="recipe in recipesCtrl.recipes | orderBy: 'recipe_id'">
                     <td>{{recipe.name}}</td>
                     <td>{{recipe.equipment_volume}}</td>
                     <td>{{recipe.directions}}</td>
@@ -32,6 +32,6 @@
 
         <br>
 
-        <md-button class="md-primary" href='/app/newRecipe'>CRIAR NOVA RECEITA</md-button>
+        <md-button class="md-primary" ui-sref="app.newRecipe">NEW RECIPE</md-button>
     </md-content>
 </div>
