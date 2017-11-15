@@ -1,98 +1,24 @@
 var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
-var crypto = require('crypto');
-var jwt = require('jsonwebtoken');
-var secret = require('../config').secret;
+var User = mongoose.model('User');
 
 var RecipeSchema = new mongoose.Schema({
-  recipe_id: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
-  user_id: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
+  recipe_id: {type: int, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
+  user_id:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   name: String,
-  equipment_volume: String,
+  equipment_volume: int, 
   ingredients: String,
-  directions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }],
-  data: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  data: { type: Date, default: Date.now }
 }, {timestamps: true});
 
-UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
-
-UserSchema.methods.validPassword = function(password) {
-  var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-  return this.hash === hash;
-};
-
-UserSchema.methods.setPassword = function(password){
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-};
-
-UserSchema.methods.generateJWT = function() {
-  var today = new Date();
-  var exp = new Date(today);
-  exp.setDate(today.getDate() + 60);
-
-  return jwt.sign({
-    id: this._id,
-    username: this.username,
-    exp: parseInt(exp.getTime() / 1000),
-  }, secret);
-};
-
-UserSchema.methods.toAuthJSON = function(){
+RecipeSchema.methods.toAuthJSON = function(){
   return {
-    username: this.username,
-    email: this.email,
-    token: this.generateJWT(),
-    bio: this.bio,
-    image: this.image
+    recipe_id: this.recipe_id,
+    user_id: this.user_id,
+    name: this.name,
+    equipment_volume: this.equipment_volume,
+    ingredients: this.ingredients,
+    date: this.data
   };
 };
 
-UserSchema.methods.toProfileJSONFor = function(user){
-  return {
-    username: this.username,
-    bio: this.bio,
-    image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
-    following: user ? user.isFollowing(this._id) : false
-  };
-};
-
-UserSchema.methods.favorite = function(id){
-  if(this.favorites.indexOf(id) === -1){
-    this.favorites.push(id);
-  }
-
-  return this.save();
-};
-
-UserSchema.methods.unfavorite = function(id){
-  this.favorites.remove(id);
-  return this.save();
-};
-
-UserSchema.methods.isFavorite = function(id){
-  return this.favorites.some(function(favoriteId){
-    return favoriteId.toString() === id.toString();
-  });
-};
-
-UserSchema.methods.follow = function(id){
-  if(this.following.indexOf(id) === -1){
-    this.following.push(id);
-  }
-
-  return this.save();
-};
-
-UserSchema.methods.unfollow = function(id){
-  this.following.remove(id);
-  return this.save();
-};
-
-UserSchema.methods.isFollowing = function(id){
-  return this.following.some(function(followId){
-    return followId.toString() === id.toString();
-  });
-};
-
-mongoose.model('User', UserSchema);
+mongoose.model('Recipe', RecipeSchema);

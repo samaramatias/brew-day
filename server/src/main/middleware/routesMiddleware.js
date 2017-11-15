@@ -28,6 +28,38 @@
         app.post('/', function (req, res) {
             res.sendFile(clientFilesPath + '/index.html');
         });
+
+        app.get('/:recipe', function(req, res){
+            if(req.payload){
+              User.findById(req.payload.id).then(function(user){
+                if(!user){ return res.json({profile: req.profile.toProfileJSONFor(false)}); }
+          
+                return res.json({profile: req.profile.toProfileJSONFor(user)});
+              });
+            } else {
+              return res.json({profile: req.profile.toProfileJSONFor(false)});
+            }
+          });
+
+        app.post('/recipe', (req, res) => {
+            db.collection('recipe').save(req.body, (err, result) => {
+              if (err) return console.log(err)
+          
+              console.log('saved to database')
+              res.redirect('/')
+            })
+          })
+
+          app.post('/api/posts', function (req, res, next) {
+            var post = new Post({
+              username: req.body.username,
+              body: req.body.body
+            })
+            post.save(function (err, post) {
+              if (err) { return next(err) }
+              res.json(201, post)
+            })
+          })
     };
 
     module.exports = routesMiddleware;
