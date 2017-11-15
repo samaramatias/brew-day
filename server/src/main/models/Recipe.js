@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var ObjectId = mongoose.Types.ObjectId;
 
 var RecipeSchema = new mongoose.Schema({
-  recipe_id: {type: int, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
+  recipe_id: {type: int, unique: true, required: [true, "can't be blank"], index: true},
   user_id:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   name: String,
   equipment_volume: int, 
@@ -20,5 +21,7 @@ RecipeSchema.methods.toAuthJSON = function(){
     date: this.data
   };
 };
+
+
 
 mongoose.model('Recipe', RecipeSchema);

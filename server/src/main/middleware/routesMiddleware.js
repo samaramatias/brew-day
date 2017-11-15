@@ -51,13 +51,13 @@
           })
 
           app.post('/api/posts', function (req, res, next) {
-            var post = new Post({
-              username: req.body.username,
+            var recipe = new Recipe({
+              recipe_id: req.body.recipe_id,
               body: req.body.body
             })
             post.save(function (err, post) {
               if (err) { return next(err) }
-              res.json(201, post)
+              res.json(201, recipe)
             })
           })
     };
