@@ -15,8 +15,8 @@
             'angular-storage',
             'angular-jwt',
             'angular-loading-bar',
-
             'appModule',
+            'recipeModule',
             'loginModule',
             'authModule',
             'userModule',
@@ -40,6 +40,8 @@
                             function (auth, $state) {
                                 if (!auth.isAuthenticated) {
                                     $state.go('app.login');
+                                } else {
+                                    $state.go('app.recipe');
                                 }
                             }
                         ]
@@ -51,7 +53,15 @@
                     controller: 'LoginController as loginCtrl'
                 })
                 .state('app.recipe', {
-                    url: '/recipe'
+                    url: '/recipe',
+                    templateUrl: '/view/recipes.html',
+                    controller: 'RecipesController as recipesCtrl'
+
+                })
+                .state('app.newRecipe', {
+                    url: '/newRecipe',
+                    templateUrl: '/view/newRecipe.html',
+                    controller: 'NewRecipeController as newRecipeCtrl'
                 });
 
             $locationProvider.html5Mode(true);
