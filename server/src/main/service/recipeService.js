@@ -48,7 +48,7 @@
      * @param {String} recipeId Recipe ID.
      * @returns {Promise} Promise with the recipe.
      */
-    UserService.getRecipeById = function (recipeId) {
+    RecipeService.getRecipeById = (recipeId) => {
         return new Promise(function (resolve, reject) {
             if (!_.isEmpty(_idCache[recipeId])) {
                 return resolve(_cacheGet(_idCache, recipeId));
@@ -65,6 +65,19 @@
             });
         });
     };
+
+    /**
+    * Persists a recipe in the database.
+    *
+    * @param   {Recipe} recipe  Recipe to persist.
+    * @returns {Promise.<Object>} Resolved promise with persisted recipe.
+    * @private
+    */
+    RecipeService.persistRecipe = recipe => new Promise(
+        (resolve, reject) => recipe.save(
+            (err, resultado) => (err) ? reject(err) : resolve(resultado.toObject())
+        )
+    );
 
     module.exports = RecipeService;
 })();

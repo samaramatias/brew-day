@@ -1,5 +1,9 @@
+(() => {
+  'use strict';
+
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Ingredient = mongoose.model('Ingredient');
 var ObjectId = mongoose.Types.ObjectId;
 
 var RecipeSchema = new mongoose.Schema({
@@ -7,9 +11,11 @@ var RecipeSchema = new mongoose.Schema({
   user_id:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   name: String,
   equipment_volume: int, 
-  ingredients: String,
+  ingredients: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient'}],
   data: { type: Date, default: Date.now }
 }, {timestamps: true});
+
+// TODO Create custom findId for DB.
 
 RecipeSchema.methods.toAuthJSON = function(){
   return {
@@ -25,3 +31,5 @@ RecipeSchema.methods.toAuthJSON = function(){
 
 
 mongoose.model('Recipe', RecipeSchema);
+
+})();

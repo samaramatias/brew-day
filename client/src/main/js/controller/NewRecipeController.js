@@ -29,18 +29,18 @@
                 self.ingredients = [];
 
                 // adicionar $http nos parâmetros
-                //
-                // $http({
-                //     method: 'POST',
-                //     url: 'http://localhost:3412/recipe',
-                //     data: recipe
-                // }).then(function (success){
-                //     delete self.recipe;
-                //     self.ingredients = [];
-                //     //ir para página de receitas
-                // },function (error){
-                //     console.log(error);
-                // });
+                
+                $http({
+                    method: 'POST',
+                    url: 'http://localhost:8080/recipe',
+                    data: recipe
+                }).then(function (success){
+                    delete self.recipe;
+                    self.ingredients = [];
+                    //ir para página de receitas
+                },function (error){
+                    console.log(error);
+                });
             };
 
             /**
