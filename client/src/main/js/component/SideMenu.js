@@ -9,11 +9,11 @@
     sideMenuModule.component('sideMenu', {
         templateUrl: '/view/component/sideMenu.html',
         bindings: {},
-        controller: ['$state', 'AuthService', 'User',
-            function ($state, AuthService, User) {
+        controller: ['$state', 'AuthService',
+            function ($state, AuthService) {
                 var self = this;
 
-                self.user = new User(AuthService.getUserLoggedIn());
+                self.user = AuthService.getUserLoggedIn();
                 self.userName = _.first(self.user.full_name.split(' '));
             }
         ]

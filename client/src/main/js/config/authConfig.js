@@ -11,7 +11,7 @@
             });
 
             jwtOptionsProvider.config({
-                whiteListeDomains: ['localhost'],
+                whiteListeDomains: ['localhost', 'brewday.fun'],
                 tokenGetter: function () {
                     var token = localStorage.getItem('idToken');
                     return token ? token.toString().replace(/"/g, '') : undefined;
@@ -31,6 +31,7 @@
                             store.remove('accessToken');
                             $injector.get('$state').go('app.login');
                         }
+                        return rejection;
                     }
                 };
             }]);
