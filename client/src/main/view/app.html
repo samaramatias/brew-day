@@ -1,17 +1,17 @@
 <div layout='column' flex>
     <main-toolbar></main-toolbar>
 
-    <md-content flex layout='column'>
+    <div flex layout='column'>
         <side-menu ng-if='appCtrl.isAuthenticated()'></side-menu>
 
-        <div flex ui-view></div>
+        <div id='main-view' flex ui-view></div>
 
-        <md-content layout='row' layout-align='center center'>
+        <div id='footer' layout='row' layout-align='center center'>
             <a width='150' height='50' href='https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss'
                target='_blank' alt='Single Sign On & Token Based Authentication - Auth0'><img width='150'
                                                                                               height='50'
                                                                                               alt='JWT Auth for open source projects'
                                                                                               src='//cdn.auth0.com/oss/badges/a0-badge-light.png'/></a>
-        </md-content>
-    </md-content>
+        </div>
+    </div>
 </div>

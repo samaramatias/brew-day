@@ -17,6 +17,7 @@
             'angular-loading-bar',
             'appModule',
             'recipeModule',
+            'ingredientModule',
             'loginModule',
             'authModule',
             'userModule',
@@ -55,6 +56,16 @@
                     url: '/recipes',
                     templateUrl: '/view/recipes.html',
                     controller: 'RecipesController as recipesCtrl'
+                })
+                .state('app.recipe', {
+                    url: '/recipe',
+                    templateUrl: '/view/recipe.html',
+                    controller: 'RecipeController as recipeCtrl'
+                })
+                .state('app.recipeId', {
+                    url: '/recipe/:recipeId',
+                    templateUrl: '/view/recipe.html',
+                    controller: 'RecipeController as recipeCtrl'
                 });
 
             $locationProvider.html5Mode(true);

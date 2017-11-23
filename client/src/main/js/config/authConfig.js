@@ -31,7 +31,7 @@
                             store.remove('accessToken');
                             $injector.get('$state').go('app.login');
                         }
-                        return rejection;
+                        return $q.reject(rejection);
                     }
                 };
             }]);

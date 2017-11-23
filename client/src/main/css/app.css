@@ -28,6 +28,14 @@ md-toast.md-warning-toast-theme .md-toast-content {
     height: 100%;
 }
 
+#main-view {
+    overflow-y: auto;
+}
+
+#footer {
+    background-color: #F6F6F6;
+}
+
 .img-circle {
     border-radius: 50%;
 }
@@ -36,4 +44,18 @@ md-toast.md-warning-toast-theme .md-toast-content {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+.fade-element.ng-hide {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+.fade-element.ng-hide-add,
+.fade-element.ng-hide-remove {
+    transition: all linear 0.3s;
+}
+
+.fade-element.ng-hide-add {
+    display: none;
 }

@@ -1,0 +1,205 @@
+<!-- Visualizing recipe -->
+<md-content ng-if='recipeCtrl.recipeId' layout='column' layout-align='center center' layout-padding>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='center center' layout-padding>
+                <span class='md-headline' layout='row' layout-align='center center'>
+                    <md-button class='md-icon-button fade-element'
+                               ng-show='recipeCtrl.editMode'>
+                        <md-icon class='md-48'>done</md-icon>
+                    </md-button>
+
+                    <md-button class='md-icon-button fade-element'
+                               ng-show='recipeCtrl.editMode'
+                               ng-click='recipeCtrl.toggleEditMode()'>
+                        <md-icon class='md-48'>clear</md-icon>
+                    </md-button>
+
+                    <md-button class='md-icon-button fade-element'
+                               ng-show='!recipeCtrl.editMode'
+                               ng-click='recipeCtrl.toggleEditMode()'>
+                        <md-icon class='md-48'>mode_edit</md-icon>
+                    </md-button>
+
+                    <md-button class='md-icon-button fade-element'
+                               ng-show='!recipeCtrl.editMode'>
+                        <md-icon class='md-48'>delete</md-icon>
+                    </md-button>
+                </span>
+
+                <span class='md-headline'>{{recipeCtrl.recipe.name}}</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content layout='column' layout-align='center start'>
+            <p layout='row'>
+                <md-icon class='md-48'>description</md-icon>
+                <md-card-content>
+                    {{recipeCtrl.recipe.directions}}
+                </md-card-content>
+            </p>
+
+            <p layout='row'>
+                <md-icon class='md-48'>shopping_basket</md-icon>
+                <md-card-content>
+                    <span ng-repeat='ingredient in recipeCtrl.recipe.ingredients'>
+                        {{ingredient.toString()}}
+                        <br>
+                    </span>
+                </md-card-content>
+            </p>
+
+            <p layout='row'>
+                <md-icon class='md-48'>opacity</md-icon>
+                <md-card-content>
+                    {{recipeCtrl.recipe.equipment.volume}} {{recipeCtrl.recipe.equipment.unit}}
+                </md-card-content>
+            </p>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+<!-- Creating recipe -->
+<div ng-if='!recipeCtrl.recipeId' layout='column' layout-align='center center' layout-padding>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='center center' layout-padding>
+                <span class='md-headline' layout='row' layout-align='center center'>
+                    <md-button hide-xs aria-label='Add ingredient'
+                               class='md-primary md-hue-1'
+                               ng-click='recipeCtrl.addIngredient()'>Add Ingredient</md-button>
+
+                    <md-button hide-gt-xs aria-label='Add ingredient' class='md-icon-button'
+                               ng-click='recipeCtrl.addIngredient()'>
+                        <md-icon class='md-48'>add</md-icon>
+                    </md-button>
+
+                    <md-button hide-xs aria-label='Remove ingredient' class='md-primary md-hue-1'
+                               ng-click='recipeCtrl.removeIngredient()'>Remove Ingredient</md-button>
+
+                    <md-button hide-gt-xs aria-label='Remove ingredient' class='md-icon-button'
+                               ng-click='recipeCtrl.removeIngredient()'>
+                        <md-icon class='md-48'>remove</md-icon>
+                    </md-button>
+                </span>
+
+                <span class='md-headline'>New Recipe</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content class='md-inline-form' layout='column'>
+            <form name='recipeForm' layout='column'>
+                <md-input-container class='md-icon-float md-clock'>
+                    <label>Recipe Name</label>
+                    <md-icon class='md-48'>local_drink</md-icon>
+                    <input required name='recipeName' ng-model='recipeCtrl.recipe.name'>
+
+                    <div ng-messages='recipeForm.recipeName.$error'>
+                        <div ng-message='required'>This is required.</div>
+                    </div>
+                </md-input-container>
+
+                <div layout='row'>
+                    <md-input-container class='md-icon-float md-block'>
+                        <label>Equipment Volume</label>
+                        <md-icon class='md-48'>opacity</md-icon>
+                        <input required type='number' step='any' name='equipmentVolume'
+                               ng-model='recipeCtrl.recipe.equipment.volume' min='0'/>
+
+                        <div ng-messages='recipeForm.equipmentVolume.$error' multiple>
+                            <div ng-message='required'>
+                                This is required.
+                            </div>
+
+                            <div ng-message='min'>
+                                Needs to be at least zero.
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class='md-icon-float md-block'>
+                        <label>Unit</label>
+                        <md-select required name='volumeUnit' ng-model='recipeCtrl.recipe.equipment.unit'>
+                            <md-option ng-repeat='unit in recipeCtrl.readableVolumeUnits'
+                                       value='{{recipeCtrl.volumeUnits[unit]}}'>
+                                {{unit}}
+                            </md-option>
+                        </md-select>
+
+                        <div ng-messages='recipeForm.volumeUnit.$error'>
+                            <div ng-message='required'>This is required.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div layout='column' layout-align='center center'>
+                    <div layout='row' ng-repeat='newIngredient in recipeCtrl.recipe.ingredients' layout-fill>
+                        <md-input-container class='md-icon-float md-block'>
+                            <label>Ingredient Name</label>
+                            <md-icon class='md-48'>shopping_basket</md-icon>
+                            <input required name='ingredientName' ng-model='newIngredient.name'>
+
+                            <div ng-messages='recipeForm.ingredientName.$error'>
+                                <div ng-message='required'>This is required.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class='md-block'>
+                            <label>Ingredient Quantity</label>
+                            <input required type='number' step='any' name='ingredientQuantity'
+                                   ng-model='newIngredient.quantity' min='0'/>
+
+                            <div ng-messages='recipeForm.ingredientQuantity.$error' multiple>
+                                <div ng-message='required'>
+                                    This is required.
+                                </div>
+
+                                <div ng-message='min'>
+                                    Needs to be at least zero.
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class='md-block'>
+                            <label>Unit</label>
+                            <md-select required name='ingredientUnit' ng-model='newIngredient.unit'>
+                                <md-option ng-repeat='unit in recipeCtrl.readableQuantityUnits'
+                                           value='{{recipeCtrl.quantityUnits[unit]}}'>
+                                    {{unit}}
+                                </md-option>
+                            </md-select>
+
+                            <div ng-messages='recipeForm.ingredientUnit.$error'>
+                                <div ng-message='required'>This is required.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <md-input-container class='md-icon-float md-block'>
+                    <label>How to Make</label>
+                    <md-icon class='md-48'>description</md-icon>
+                    <textarea name='recipeDirections' ng-model='recipeCtrl.recipe.directions' md-maxlength='350'
+                              rows='3' md-select-on-focus></textarea>
+
+                    <div ng-messages='recipeForm.recipeDirections.$error'>
+                        <div ng-message='md-maxlength'>
+                            Text is too long.
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <span layout='row' layout-align='center center'>
+                    <md-button type='submit' aria-label='Save recipe' class='md-icon-button'
+                               ng-click='recipeCtrl.saveRecipe()'>
+                        <md-icon class='md-48'>done</md-icon>
+                    </md-button>
+
+                    <md-button aria-label='Clear recipe' class='md-icon-button' ng-click='recipeCtrl.clearRecipe()'>
+                        <md-icon class='md-48'>clear</md-icon>
+                    </md-button>
+                </span>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

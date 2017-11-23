@@ -1,12 +1,12 @@
 'use strict';
 
 (function () {
-    var recipeModule = angular.module('recipeModule');
+    var ingredientModule = angular.module('ingredientModule', []);
 
     /**
      * Factory for ingredient objects.
      */
-    recipeModule.factory('Ingredient', [function () {
+    ingredientModule.factory('Ingredient', [function () {
 
         /**
          * Factory constructor of an ingredient.
@@ -23,6 +23,15 @@
         }
 
         Ingredient.prototype.constructor = Ingredient;
+
+        /**
+         * Get string representation of an ingredient.
+         *
+         * @returns {String} String representation of an ingredient.
+         */
+        Ingredient.prototype.toString = function () {
+            return this.quantity + ' ' + this.unit + ' ' + this.name;
+        };
 
         return Ingredient;
     }]);

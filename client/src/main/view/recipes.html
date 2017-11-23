@@ -1,39 +1,25 @@
 <md-content layout-xs='column' layout-gt-xs='row' layout-padding>
-    <md-card flex-xs flex-gt-xs='25'>
+    <md-card ng-repeat='recipe in recipeCtrl.recipes' flex-xs flex-gt-xs='25'>
         <md-card-title>
-            <md-card-title-text layout='column' layout-align='center center'>
-                <span class='md-headline'>{{'Recipe Name' | limitTo: 30}}</span>
+            <md-card-title-text layout='column' layout-align='start center'>
+                <span class='md-headline'>{{recipe.name | limitTo: 30}}{{recipe.name.length > 30 ? '&hellip;' : ''}}</span>
             </md-card-title-text>
         </md-card-title>
 
         <md-card-content layout='column' layout-align='center start'>
             <p layout='row'>
                 <md-icon class='md-48'>description</md-icon>
-                <md-card-content>{{'Lorem ipsum dolor sit amet, fabulas intellegebat sea at, eos splendide disputando
-                    ullamcorper id. Quas elitr intellegebat ne has. Iriure voluptaria duo ne. Mei an graece postea
-                    gubergren, mel tation consequat in. In graecis nusquam vivendum est. Persequeris instructior
-                    deterruisset vel at, sea mentitum evertitur similique eu.
-
-                    Ne debitis petentium sea, pri elitr utinam graeci eu. Soluta honestatis usu at, te quidam atomorum
-                    assentior quo, ex novum mazim fabulas mei. Eam cu sonet soluta vivendo. Usu equidem delectus
-                    partiendo in, suas definiebas duo at. Nec putant everti ne.' | limitTo: 200}}{{'&hellip;'}}
+                <md-card-content>
+                    {{recipe.directions | limitTo: 200}}{{recipe.directions.length > 200 ? '&hellip;' : ''}}
                 </md-card-content>
             </p>
 
             <p layout='row'>
                 <md-icon class='md-48'>shopping_basket</md-icon>
-                <md-card-content>{{'Lorem ipsum dolor sit amet, fabulas intellegebat sea at, eos splendide disputando
-                    ullamcorper id. Quas elitr intellegebat ne has. Iriure voluptaria duo ne. Mei an graece postea
-                    gubergren, mel tation consequat in. In graecis nusquam vivendum est. Persequeris instructior
-                    deterruisset vel at, sea mentitum evertitur similique eu.
-
-                    Ne debitis petentium sea, pri elitr utinam graeci eu. Soluta honestatis usu at, te quidam atomorum
-                    assentior quo, ex novum mazim fabulas mei. Eam cu sonet soluta vivendo. Usu equidem delectus
-                    partiendo in, suas definiebas duo at. Nec putant everti ne.' | limitTo: 100}}{{'&hellip;'}}
+                <md-card-content>{{recipe.getIngredientsSummary() | limitTo:
+                    100}}{{recipe.getIngredientsSummary().length > 100 ? '&hellip;' : ''}}
                 </md-card-content>
             </p>
         </md-card-content>
     </md-card>
 </md-content>
-
-<!-- TODO: Finish this when server model is ready. -->

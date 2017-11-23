@@ -21,6 +21,8 @@
             Object.assign(this, user);
         }
 
+        User.prototype.constructor = User;
+
         /**
          * Create getters and setters for user metadata.
          * @private
@@ -37,8 +39,6 @@
                 });
             });
         };
-
-        User.prototype.constructor = User;
 
         User.prototype._organizeMetadata();
 
