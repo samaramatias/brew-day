@@ -6,23 +6,24 @@
     /**
      * Controller of the recipes page.
      */
-    newRecipeModule.controller('RecipesController', ['$http', function ($http) {
+    newRecipeModule.controller('RecipesController',
+        ['$http', function ($http) {
             var self = this;
 
             self.recipes = [];
 
             // após a integração com o back
             // declarar $http nos parâmetros
-            var loadRecipes = function () {
-                $http({
-                    method: 'GET',
-                    url: 'http://localhost:8080/recipe'
-                }).then(function (success){
-                    self.recipes = success.data;
-                },function (error){
-                    console.log(error);
-                });
-            };
+            // var loadRecipes = function () {
+            //     $http({
+            //         method: 'GET',
+            //         url: 'http://localhost:3412/recipe'
+            //     }).then(function (success){
+            //         self.recipes = success.data;
+            //     },function (error){
+            //         console.log(error);
+            //     });
+            // };
 
             /**
              * Get recipes from database
