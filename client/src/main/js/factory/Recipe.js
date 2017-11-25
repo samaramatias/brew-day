@@ -18,8 +18,8 @@
          * @constructor
          */
         function Recipe(recipe) {
-            self.recipe_metadata = recipe.recipe_metadata || {};
-            self.app_metadata = recipe.app_metadata || {};
+            self.recipeMetadata = recipe.recipeMetadata || {};
+            self.appMetadata = recipe.appMetadata || {};
             Object.assign(this, recipe);
         }
 
@@ -29,11 +29,11 @@
         Recipe.prototype.organizeMetadata = function () {
             _.each(recipeMetadata, function (prop) {
                 Recipe.prototype.__defineGetter__(prop, function () {
-                    return self.recipe_metadata[prop];
+                    return self.recipeMetadata[prop];
                 });
 
                 Recipe.prototype.__defineSetter__(prop, function (value) {
-                    self.recipe_metadata[prop] = value;
+                    self.recipeMetadata[prop] = value;
                 });
             });
         };

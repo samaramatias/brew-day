@@ -7,10 +7,10 @@ var Ingredient = mongoose.model('Ingredient');
 var ObjectId = mongoose.Types.ObjectId;
 
 var RecipeSchema = new mongoose.Schema({
-  recipe_id: {type: int, unique: true, required: [true, "can't be blank"], index: true},
-  user_id:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  recipeId: {type: int, unique: true, required: [true, "can't be blank"], index: true},
+  userId:  {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   name: String,
-  equipment_volume: int, 
+  equipment: {type: mongoose.Schema.Types.ObjectId, ref: 'Equipment'}, 
   ingredients: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient'}],
   data: { type: Date, default: Date.now }
 }, {timestamps: true});
@@ -19,17 +19,14 @@ var RecipeSchema = new mongoose.Schema({
 
 RecipeSchema.methods.toAuthJSON = function(){
   return {
-    recipe_id: this.recipe_id,
-    user_id: this.user_id,
+    recipeId: this.recipeId,
+    userId: this.userId,
     name: this.name,
-    equipment_volume: this.equipment_volume,
+    equipment: this.equipment,
     ingredients: this.ingredients,
     date: this.data
   };
 };
 
-
-
 mongoose.model('Recipe', RecipeSchema);
-
 })();
