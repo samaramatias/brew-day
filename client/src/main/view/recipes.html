@@ -1,5 +1,6 @@
-<md-content layout-xs='column' layout-gt-xs='row' layout-padding>
-    <md-card ng-repeat='recipe in recipesCtrl.recipes' flex-xs flex-gt-xs='25'>
+<md-content layout-sm='column' layout-gt-sm='row' layout-align-gt-sm='center start' layout-padding layout-wrap>
+    <md-card ng-repeat='recipe in recipesCtrl.recipes' flex-sm flex-gt-sm='25'
+             ui-sref='app.recipeId({recipeId: recipe._id})' class='card-button'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='start center'>
                 <span class='md-headline'>{{recipe.name | limitTo: 30}}{{recipe.name.length > 30 ? '&hellip;' : ''}}</span>

@@ -58,16 +58,20 @@
 
             /**
              * Save a new recipe.
+             *
+             * @param {Object} recipeForm HTML form with the recipe data.
              */
-            self.saveRecipe = function () {
-                RecipeService.createRecipe(self.recipe)
-                    .then(function () {
-                        ToastService.successToast('Recipe saved!');
-                    })
-                    .catch(function (error) {
-                        ToastService.errorToast('Recipe could not be saved.');
-                        console.error(error);
-                    });
+            self.saveRecipe = function (recipeForm) {
+                if (recipeForm.$valid) {
+                    RecipeService.createRecipe(self.recipe)
+                        .then(function () {
+                            ToastService.successToast('Recipe saved!');
+                        })
+                        .catch(function (error) {
+                            ToastService.errorToast('Recipe could not be saved.');
+                            console.error(error);
+                        });
+                }
             };
 
             (function () {

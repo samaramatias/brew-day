@@ -46,6 +46,25 @@ md-toast.md-warning-toast-theme .md-toast-content {
     height: auto;
 }
 
+.card-button {
+    cursor: pointer;
+}
+
+.card-button:hover {
+    background-color: rgba(158, 158, 158, 0.2);
+    transition: 0.3s;
+}
+
+.created-recipe-card {
+    width: 50%;
+}
+
+@media (max-width: 959px) {
+    .created-recipe-card {
+        width: 100%;
+    }
+}
+
 .fade-element.ng-hide {
     opacity: 0;
     transform: translateY(-100%);

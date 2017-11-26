@@ -1,6 +1,6 @@
 <!-- Visualizing recipe -->
 <md-content ng-if='recipeCtrl.recipeId' layout='column' layout-align='center center' layout-padding>
-    <md-card>
+    <md-card class='created-recipe-card'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='center center' layout-padding>
                 <span class='md-headline' layout='row' layout-align='center center'>
@@ -191,7 +191,7 @@
 
                 <span layout='row' layout-align='center center'>
                     <md-button type='submit' aria-label='Save recipe' class='md-icon-button'
-                               ng-click='recipeCtrl.saveRecipe()'>
+                               ng-click='recipeCtrl.saveRecipe(recipeForm)' ng-disabled='recipeForm.$invalid'>
                         <md-icon class='md-48'>done</md-icon>
                     </md-button>
 
