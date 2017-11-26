@@ -18,6 +18,7 @@
             'appModule',
             'recipeModule',
             'ingredientModule',
+            'inventoryModule',
             'loginModule',
             'authModule',
             'userModule',

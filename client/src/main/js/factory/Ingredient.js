@@ -15,7 +15,7 @@
          * @constructor
          */
         function Ingredient(ingredient) {
-            this.ingredientId = undefined;
+            this._id = undefined;
             this.name = undefined;
             this.quantity = undefined;
             this.unit = undefined;

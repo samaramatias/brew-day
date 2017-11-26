@@ -1,5 +1,5 @@
 <md-content layout-xs='column' layout-gt-xs='row' layout-padding>
-    <md-card ng-repeat='recipe in recipeCtrl.recipes' flex-xs flex-gt-xs='25'>
+    <md-card ng-repeat='recipe in recipesCtrl.recipes' flex-xs flex-gt-xs='25'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='start center'>
                 <span class='md-headline'>{{recipe.name | limitTo: 30}}{{recipe.name.length > 30 ? '&hellip;' : ''}}</span>
