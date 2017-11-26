@@ -11,12 +11,12 @@
     var inventoryRouter = express.Router();
 
     /**
-     * GET /api/inventory/ingredient.
-     * Get the list of all ingredients from a user's inventory.
+     * GET /api/inventory.
+     * Get the user's inventory.
      *
-     * @returns {Promise} Promise with the list of ingredients.
+     * @returns {Promise} Promise with the inventory.
      */
-    inventoryRouter.get('/ingredient', function (req, res) {
+    inventoryRouter.get(['', '/'], function (req, res) {
         // TODO: Implement this. US4 and US5.
         return res.status(_.OK).json({});
     });
