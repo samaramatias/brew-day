@@ -17,16 +17,18 @@
             'angular-loading-bar',
             'appModule',
             'recipeModule',
+            'ingredientModule',
             'loginModule',
             'authModule',
             'userModule',
             'mainToolbarModule',
-            'sideMenuModule'
+            'sideMenuModule',
+            'toastModule'
         ]
     );
 
-    brewDayApp.config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
-        function ($urlRouterProvider, $stateProvider, $locationProvider) {
+    brewDayApp.config(['$urlRouterProvider', '$stateProvider', '$locationProvider', '$mdThemingProvider',
+        function ($urlRouterProvider, $stateProvider, $locationProvider, $mdThemingProvider) {
             $urlRouterProvider.otherwise('/app/');
 
             $stateProvider
@@ -40,8 +42,6 @@
                             function (auth, $state) {
                                 if (!auth.isAuthenticated) {
                                     $state.go('app.login');
-                                } else {
-                                    $state.go('app.recipe');
                                 }
                             }
                         ]
@@ -52,19 +52,27 @@
                     templateUrl: '/view/login.html',
                     controller: 'LoginController as loginCtrl'
                 })
-                .state('app.recipe', {
-                    url: '/recipe',
+                .state('app.recipes', {
+                    url: '/recipes',
                     templateUrl: '/view/recipes.html',
                     controller: 'RecipesController as recipesCtrl'
-
                 })
-                .state('app.newRecipe', {
-                    url: '/newRecipe',
-                    templateUrl: '/view/newRecipe.html',
-                    controller: 'NewRecipeController as newRecipeCtrl'
+                .state('app.recipe', {
+                    url: '/recipe',
+                    templateUrl: '/view/recipe.html',
+                    controller: 'RecipeController as recipeCtrl'
+                })
+                .state('app.recipeId', {
+                    url: '/recipe/:recipeId',
+                    templateUrl: '/view/recipe.html',
+                    controller: 'RecipeController as recipeCtrl'
                 });
 
             $locationProvider.html5Mode(true);
+
+            $mdThemingProvider.theme('danger-toast');
+            $mdThemingProvider.theme('success-toast');
+            $mdThemingProvider.theme('warning-toast');
         }
     ]);
 

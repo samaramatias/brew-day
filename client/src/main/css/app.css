@@ -6,6 +6,18 @@ md-sidenav.md-closed.md-locked-open-add-active {
     max-width: 180px !important;
 }
 
+md-toast.md-danger-toast-theme .md-toast-content {
+    background-color: #CC0000;
+}
+
+md-toast.md-success-toast-theme .md-toast-content {
+    background-color: #007E33;
+}
+
+md-toast.md-warning-toast-theme .md-toast-content {
+    background-color: #FF8800;
+}
+
 #toolbar-app-logo {
     height: 24px;
     width: 24px;
@@ -16,34 +28,12 @@ md-sidenav.md-closed.md-locked-open-add-active {
     height: 100%;
 }
 
-#ingredients, #recipesTable {
-    border-collapse: collapse;
-    width: 100%;
+#main-view {
+    overflow-y: auto;
 }
 
-#ingredients td, #ingredients th, #recipesTable th {
-    padding: 8px;
-}
-
-#ingredients tr:nth-child(even), #recipesTable tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#ingredients tr:hover, #recipesTable tr:hover {
-    background-color: #ddd;
-}
-
-#ingredients th, #recipesTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #ddd;
-    color: #5a5a5a;
-}
-
-#newRecipe {
-    background-color: lightgrey;
-    margin: 0 auto;
+#footer {
+    background-color: #F6F6F6;
 }
 
 .img-circle {
@@ -56,12 +46,16 @@ md-sidenav.md-closed.md-locked-open-add-active {
     height: auto;
 }
 
-.inputdemoErrors .inputErrorsApp {
-    min-height: 48px;
+.fade-element.ng-hide {
+    opacity: 0;
+    transform: translateY(-100%);
 }
 
-.inputdemoErrors md-input-container > p {
-    font-size: 0.8em;
-    text-align: left;
-    width: 100%;
+.fade-element.ng-hide-add,
+.fade-element.ng-hide-remove {
+    transition: all linear 0.3s;
+}
+
+.fade-element.ng-hide-add {
+    display: none;
 }

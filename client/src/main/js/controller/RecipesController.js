@@ -1,67 +1,33 @@
 'use strict';
 
 (function () {
-    var newRecipeModule = angular.module('recipeModule', ['ngMaterial', 'ngMessages']);
+    var recipeModule = angular.module('recipeModule');
 
     /**
      * Controller of the recipes page.
      */
-    newRecipeModule.controller('RecipesController',
-        ['$http', function ($http) {
+    recipeModule.controller('RecipesController', ['RecipeService', 'ToastService',
+        function (RecipeService, ToastService) {
             var self = this;
 
             self.recipes = [];
 
-            // após a integração com o back
-            // declarar $http nos parâmetros
-            // var loadRecipes = function () {
-            //     $http({
-            //         method: 'GET',
-            //         url: 'http://localhost:3412/recipe'
-            //     }).then(function (success){
-            //         self.recipes = success.data;
-            //     },function (error){
-            //         console.log(error);
-            //     });
-            // };
-
             /**
-             * Get recipes from database
+             * Load recipes from the server.
              */
             self.loadRecipes = function () {
-                self.recipes = [{ "recipe_id":"1",
-                                    "user_id":"1",
-                                    "name":"RECEITANOME",
-                                    "equipment_volume":234,
-                                    "directions":"1. Do something",
-                                    "data":"2017-11-13T14:14:58.950Z",
-                                    "ingredients":[{"name":"Water",
-                                                    "quantity":3,
-                                                    "unit":"litros"}]},
-                                    {"recipe_id":"3",
-                                    "user_id":"133",
-                                    "name":"RECEITANOME3",
-                                    "equipment_volume":234,
-                                    "directions":"1. Do something",
-                                    "data":"2017-11-13T14:14:58.950Z",
-                                    "ingredients":[{"name":"Water",
-                                        "quantity":3,
-                                        "unit":"litros"}]},
-                                    {"recipe_id":"2",
-                                    "user_id":"242",
-                                    "name":"RECEITANOME2",
-                                    "equipment_volume":234,
-                                    "directions":"1. Do something",
-                                    "data":"2017-11-13T14:14:58.950Z",
-                                    "ingredients":[{"name":"Water",
-                                        "quantity":3,
-                                        "unit":"litros"}]}];
+                RecipeService.loadRecipes()
+                    .then(function (response) {
+                        self.recipes = response.data;
+                    })
+                    .catch(function () {
+                        ToastService.errorToast('Failed to load recipes.');
+                    });
             };
 
-            /**
-             * Initialize recipes.
-             */
-            self.loadRecipes();
+            (function () {
+                self.loadRecipes();
+            })();
         }
     ]);
 })();
