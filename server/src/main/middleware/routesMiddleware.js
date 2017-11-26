@@ -4,6 +4,9 @@
     var jwt = require('express-jwt');
     var _ = require('../util/util');
 
+    var recipeRouter = require('../router/recipeRouter');
+    var inventoryRouter = require('../router/inventoryRouter');
+
     var authCheck = jwt({
         secret: _.AUTH0.CLIENT_SECRET,
         audience: _.AUTH0.CLIENT_ID
@@ -28,6 +31,9 @@
         app.post('/', function (req, res) {
             res.sendFile(clientFilesPath + '/index.html');
         });
+
+        app.use('/api/recipe', authCheck, recipeRouter);
+        app.use('/api/inventory', authCheck, inventoryRouter);
     };
 
     module.exports = routesMiddleware;

@@ -24,5 +24,28 @@
         MANAGER_SECRET: process.env.BREWDAY_MANAGER_SECRET
     };
 
+    /**
+     * Get the user access token from the request headers.
+     *
+     * @param {Object} req Request object.
+     *
+     * @returns {String} User access token from the request headers.
+     */
+    _.getToken = function (req) {
+        return req.header('access_token') || _.getAuthorizationToken(req)
+    };
+
+    /**
+     * Get the Authorization token from the request headers.
+     *
+     * @param {Object} req Request object.
+     *
+     * @returns {String} Authorization token from the request headers.
+     */
+    _.getAuthorizationToken = function (req) {
+        var authHeader = req.header('Authorization');
+        return authHeader.substring(authHeader.indexOf(' ')).trim();
+    };
+
     module.exports = _;
 })();

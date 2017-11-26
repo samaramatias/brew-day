@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-    var AuthService = require('./authService');
+    var AuthService = require('./AuthService');
     var _ = require('../util/util');
 
     var _cache = {};
@@ -99,7 +99,7 @@
 
             return AuthService.getUserById(userId).then(function (response) {
                 _cachePut(_idCache, userId, response);
-                return response;
+                return resolve(response);
             });
         });
     };
@@ -118,7 +118,7 @@
 
             return AuthService.getUserByAccessToken(accessToken).then(function (response) {
                 UserService.cachePut(accessToken, response);
-                return response;
+                return resolve(response);
             });
         });
     };
