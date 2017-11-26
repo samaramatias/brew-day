@@ -7,8 +7,6 @@
      * Factory for user objects.
      */
     userModule.factory('User', [function () {
-        var self = this;
-
         var userMetadata = ['full_name'];
 
         /**
@@ -18,29 +16,31 @@
          * @constructor
          */
         function User(user) {
-            self.user_metadata = user.user_metadata || {};
-            self.app_metadata = user.app_metadata || {};
+            this.user_metadata = user.user_metadata || {};
+            this.app_metadata = user.app_metadata || {};
             Object.assign(this, user);
         }
 
+        User.prototype.constructor = User;
+
         /**
          * Create getters and setters for user metadata.
+         * @private
          */
-        User.prototype.organizeMetadata = function () {
+        User.prototype._organizeMetadata = function () {
             _.each(userMetadata, function (prop) {
-                User.prototype.__defineGetter__(prop, function () {
-                    return self.user_metadata[prop];
-                });
-
-                User.prototype.__defineSetter__(prop, function (value) {
-                    self.user_metadata[prop] = value;
+                Object.defineProperty(User.prototype, prop, {
+                    get: function () {
+                        return this.user_metadata[prop]
+                    },
+                    set: function (newValue) {
+                        this.user_metadata[prop] = newValue
+                    }
                 });
             });
         };
 
-        User.prototype.constructor = User;
-
-        User.prototype.organizeMetadata();
+        User.prototype._organizeMetadata();
 
         return User;
     }]);

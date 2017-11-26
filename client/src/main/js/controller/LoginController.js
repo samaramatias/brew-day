@@ -14,7 +14,7 @@
 
             (function () {
                 if (!_.isEmpty(self.user)) {
-                    $state.go('app.recipe')
+                    $state.go('app.recipes')
                 }
             })();
         }

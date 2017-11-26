@@ -27,7 +27,7 @@
                  * login page if it's not).
                  */
                 self.goToIndex = function () {
-                    $state.go(self.auth.isAuthenticated() ? 'app.recipe' : 'app.login');
+                    $state.go(self.auth.isAuthenticated() ? 'app.recipes' : 'app.login');
                 };
 
                 /**
@@ -61,7 +61,7 @@
 
                         self.user = new User(response);
                         AuthService.authenticate(authResult.accessToken, authResult.idToken, self.user);
-                        $state.go('app.recipe');
+                        $state.go('app.recipes');
                     });
                 };
 

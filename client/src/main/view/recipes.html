@@ -1,37 +1,25 @@
-<div id="recipes" layout="column">
-    <md-content layout-padding="" >
+<md-content layout-xs='column' layout-gt-xs='row' layout-padding>
+    <md-card ng-repeat='recipe in recipeCtrl.recipes' flex-xs flex-gt-xs='25'>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='start center'>
+                <span class='md-headline'>{{recipe.name | limitTo: 30}}{{recipe.name.length > 30 ? '&hellip;' : ''}}</span>
+            </md-card-title-text>
+        </md-card-title>
 
-        <div ng-show="recipesCtrl.recipes.length > 0" layout-align="center">
-            <table id="recipesTable">
-                <tr>
-                    <th>Recipe Name</th>
-                    <th>Equipment Volume</th>
-                    <th>Directions</th>
-                    <th>Ingredients
-                        <br>
-                        Name / Quantity / Unity
-                    </th>
-                </tr>
-                <tr ng-repeat="recipe in recipesCtrl.recipes | orderBy: 'recipe_id'">
-                    <td>{{recipe.name}}</td>
-                    <td>{{recipe.equipment_volume}}</td>
-                    <td>{{recipe.directions}}</td>
-                    <td>
-                        <table id="ingredients">
+        <md-card-content layout='column' layout-align='center start'>
+            <p layout='row'>
+                <md-icon class='md-48'>description</md-icon>
+                <md-card-content>
+                    {{recipe.directions | limitTo: 200}}{{recipe.directions.length > 200 ? '&hellip;' : ''}}
+                </md-card-content>
+            </p>
 
-                            <tr ng-repeat="ingredient in recipe.ingredients">
-                                <td>{{ingredient.name}}</td>
-                                <td>{{ingredient.quantity}}</td>
-                                <td>{{ingredient.unit}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <br>
-
-        <md-button class="md-primary" ui-sref="app.newRecipe">NEW RECIPE</md-button>
-    </md-content>
-</div>
+            <p layout='row'>
+                <md-icon class='md-48'>shopping_basket</md-icon>
+                <md-card-content>{{recipe.getIngredientsSummary() | limitTo:
+                    100}}{{recipe.getIngredientsSummary().length > 100 ? '&hellip;' : ''}}
+                </md-card-content>
+            </p>
+        </md-card-content>
+    </md-card>
+</md-content>
