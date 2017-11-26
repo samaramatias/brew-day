@@ -8,20 +8,20 @@
      *
      * TODO: Edit. Delete.
      */
-    recipeModule.controller('RecipeController', ['$state', '$stateParams', 'RecipeService', 'Recipe', 'IngredientService', 'Ingredient', 'ToastService',
-        function ($state, $stateParams, RecipeService, Recipe, IngredientService, Ingredient, ToastService) {
+    recipeModule.controller('RecipeController', ['$state', '$stateParams', 'RecipeService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService',
+        function ($state, $stateParams, RecipeService, Recipe, InventoryService, Inventory, Ingredient, ToastService) {
             var self = this;
 
             self.recipe = new Recipe();
             self.recipe.ingredients.push(new Ingredient());
-            self.ingredients = [];
+            self.inventory = new Inventory();
             self.recipeId = $stateParams.recipeId;
             self.editMode = false;
 
             self.volumeUnits = RecipeService.volumeUnits;
             self.readableVolumeUnits = _.keys(self.volumeUnits);
 
-            self.quantityUnits = IngredientService.quantityUnits;
+            self.quantityUnits = InventoryService.quantityUnits;
             self.readableQuantityUnits = _.keys(self.quantityUnits);
 
             /**
@@ -81,12 +81,12 @@
                             $state.go('app.recipes');
                         });
                 } else {
-                    IngredientService.loadIngredients()
+                    InventoryService.loadInventory()
                         .then(function (response) {
-                            self.ingredients = response.data;
+                            self.inventory = response.data;
                         })
                         .catch(function () {
-                            ToastService.errorToast('Error fetching ingredients.');
+                            ToastService.errorToast('Error fetching inventory.');
                             $state.go('app.recipes');
                         });
                 }

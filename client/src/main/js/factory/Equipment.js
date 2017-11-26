@@ -15,6 +15,7 @@
          * @constructor
          */
         function Equipment(equipment) {
+            this._id = undefined;
             this.volume = undefined;
             this.unit = undefined;
             Object.assign(this, equipment);

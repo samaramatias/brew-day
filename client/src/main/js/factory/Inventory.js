@@ -1,41 +1,36 @@
 'use strict';
 
 (function () {
-    var recipeModule = angular.module('recipeModule', []);
+    var inventoryModule = angular.module('inventoryModule', []);
 
     /**
-     * Factory for recipe objects.
+     * Factory for inventory objects.
      */
-    recipeModule.factory('Recipe', ['Ingredient', 'Equipment',
-        function (Ingredient, Equipment) {
+    inventoryModule.factory('Inventory', ['Ingredient',
+        function (Ingredient) {
 
             /**
-             * Factory constructor of a recipe.
+             * Factory constructor of an inventory.
              *
-             * @param {Object} recipe Recipe object with the recipe data.
+             * @param {Object} inventory Inventory object with the inventory data.
              * @constructor
              */
-            function Recipe(recipe) {
+            function Inventory(inventory) {
                 this._id = undefined;
-                this.userId = undefined;
-                this.name = undefined;
-                this.directions = undefined;
                 this.ingredients = [];
-                this.creationDate = undefined;
-                Object.assign(this, recipe);
+                Object.assign(this, inventory);
 
-                this.equipment = new Equipment(this.equipment);
                 this._organizeIngredients();
             }
 
-            Recipe.prototype.constructor = Recipe;
+            Inventory.prototype.constructor = Inventory;
 
             /**
-             * Generate a summary string of all the ingredients of this recipe.
+             * Generate a summary string of all the ingredients of this inventory.
              *
              * @returns {String} Summary of the ingredients.
              */
-            Recipe.prototype.getIngredientsSummary = function () {
+            Inventory.prototype.getIngredientsSummary = function () {
                 var summary = '';
 
                 for (var i = 0; i < this.ingredients.length; i++) {
@@ -53,13 +48,13 @@
              * Convert list of raw ingredient objects to list of ingredient factory objects.
              * @private
              */
-            Recipe.prototype._organizeIngredients = function () {
+            Inventory.prototype._organizeIngredients = function () {
                 this.ingredients = this.ingredients.map(function (ingredient) {
                     return new Ingredient(ingredient);
                 });
             };
 
-            return Recipe;
+            return Inventory;
         }
     ]);
 })();
