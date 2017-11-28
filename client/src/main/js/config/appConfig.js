@@ -24,7 +24,8 @@
             'userModule',
             'mainToolbarModule',
             'sideMenuModule',
-            'toastModule'
+            'toastModule',
+            'modalModule'
         ]
     );
 

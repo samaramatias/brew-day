@@ -38,7 +38,6 @@
              * Load a recipe from the server.
              *
              * @param {int} recipeId ID of the recipe.
-             *
              * @returns {Promise} Promise with the recipe.
              */
             self.loadRecipe = function (recipeId) {
@@ -54,7 +53,6 @@
              * Create a new recipe.
              *
              * @param {Object} recipe Recipe to be created.
-             *
              * @returns {Promise} Promise with the created recipe.
              */
             self.createRecipe = function (recipe) {
@@ -64,6 +62,16 @@
                             data: new Recipe(response.data)
                         }
                     })
+            };
+
+            /**
+             * Delete a recipe.
+             *
+             * @param {int} recipeId ID of the recipe.
+             * @returns {Promise} Promise with the result of the operation.
+             */
+            self.deleteRecipe = function (recipeId) {
+                return $http.delete(recipeApi + '/' + recipeId);
             };
         }
     ]);
