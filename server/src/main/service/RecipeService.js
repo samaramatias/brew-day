@@ -66,5 +66,24 @@
             });
     };
 
+    /**
+     * Delete a recipe of the user that has the given ID.
+     *
+     * @param {String} userToken Access token of the user.
+     * @param {int} recipeId ID of the recipe.
+     * @returns {Promise} Promise with the result of the operation.
+     */
+    RecipeService.deleteRecipe = function (userToken, recipeId) {
+        return UserService.getUserByAccessToken(userToken)
+            .then(function (user) {
+                var params = {
+                    userId: user.user_id,
+                    _id: recipeId
+                };
+
+                return Recipe.remove(params).exec();
+            });
+    };
+
     module.exports = RecipeService;
 })();

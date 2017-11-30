@@ -60,6 +60,22 @@
             });
     });
 
+    /**
+     * DELETE /api/recipe/:recipeId
+     * Delete the recipe that has the given ID.
+     *
+     * @returns {Promise} Promise with the result of the operation.
+     */
+    recipeRouter.delete('/:recipeId', function (req, res) {
+        return RecipeService.deleteRecipe(_.getToken(req), req.params.recipeId)
+            .then(function (response) {
+                return res.status(_.OK).json(response);
+            })
+            .catch(function (error) {
+                return res.status(error.status || _.BAD_REQUEST).json(error.message || error);
+            });
+    });
+
     module.exports = recipeRouter;
 })();
 

@@ -6,10 +6,10 @@
     /**
      * Controller of the recipe page.
      *
-     * TODO: Edit. Delete.
+     * TODO: Edit.
      */
-    recipeModule.controller('RecipeController', ['$state', '$stateParams', 'RecipeService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService',
-        function ($state, $stateParams, RecipeService, Recipe, InventoryService, Inventory, Ingredient, ToastService) {
+    recipeModule.controller('RecipeController', ['$state', '$stateParams', 'RecipeService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
+        function ($state, $stateParams, RecipeService, Recipe, InventoryService, Inventory, Ingredient, ToastService, ModalService) {
             var self = this;
 
             self.recipe = new Recipe();
@@ -66,12 +66,31 @@
                     RecipeService.createRecipe(self.recipe)
                         .then(function () {
                             ToastService.successToast('Recipe saved!');
+                            $state.go('app.recipes');
                         })
                         .catch(function (error) {
                             ToastService.errorToast('Recipe could not be saved.');
                             console.error(error);
                         });
                 }
+            };
+
+            /**
+             * Delete a recipe.
+             */
+            self.deleteRecipe = function () {
+                ModalService.confirm('Delete recipe?', 'Are you sure you want to delete this recipe?')
+                    .then(function () {
+                        RecipeService.deleteRecipe(self.recipeId)
+                            .then(function () {
+                                ToastService.successToast('Recipe deleted!');
+                                $state.go('app.recipes');
+                            })
+                            .catch(function (error) {
+                                ToastService.errorToast('Recipe could not be deleted.');
+                                console.error(error);
+                            })
+                    });
             };
 
             (function () {
