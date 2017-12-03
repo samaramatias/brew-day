@@ -67,6 +67,29 @@
     };
 
     /**
+     * Update an existing recipe.
+     *
+     * @param {String} userToken Access token of the user.
+     * @param {int} recipeId ID of the recipe.
+     * @param {Object} recipe Recipe to be updated.
+     * @returns {Promise} Promise with the updated recipe.
+     */
+    RecipeService.updateRecipe = function (userToken, recipeId, recipe) {
+        return UserService.getUserByAccessToken(userToken)
+            .then(function (user) {
+                return RecipeService._getMongooseRecipe(user.user_id, recipeId)
+                    .then(function (recipeDb) {
+                        _.updateModel(recipeDb, recipe);
+
+                        return recipeDb.save()
+                            .then(function (persistedRecipe) {
+                                return persistedRecipe.toObject();
+                            });
+                    });
+            });
+    };
+
+    /**
      * Delete a recipe of the user that has the given ID.
      *
      * @param {String} userToken Access token of the user.
@@ -83,6 +106,23 @@
 
                 return Recipe.remove(params).exec();
             });
+    };
+
+    /**
+     * Private method to retrieve a recipe as a Mongoose object.
+     *
+     * @param {int} userId ID of the user that has the recipe.
+     * @param {int} recipeId ID of the recipe.
+     * @returns {Promise} Promise with the result of the operation.
+     * @private
+     */
+    RecipeService._getMongooseRecipe = function (userId, recipeId) {
+        var params = {
+            userId: userId,
+            _id: recipeId
+        };
+
+        return Recipe.findOne(params).exec();
     };
 
     module.exports = RecipeService;
