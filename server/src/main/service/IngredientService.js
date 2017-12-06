@@ -12,7 +12,7 @@
     var IngredientService = {};
 
     /**
-     * Create a new recipe and save it in the database.
+     * Create a new ingredient and save it in the database.
      *
      * @param {String} userToken Access token of the user.
      * @param {Object} ingreient Ingredient to be saved.
@@ -22,8 +22,8 @@
         return UserService.getUserByAccessToken(userToken)
             .then(function () {
                 return new Ingredient(ingredient).save()
-                    .then(function (persistedRecipe) {
-                        return persistedRecipe.toObject();
+                    .then(function (persistesIngredient) {
+                        return persistesIngredient.toObject();
                     });
             });
     };

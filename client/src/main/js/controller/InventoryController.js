@@ -22,9 +22,9 @@
             };
 
             /**
-             * Save a new recipe.
+             * Save a new ingredient.
              *
-             * @param {Object} ingredientForm HTML form with the recipe data.
+             * @param {Object} ingredientForm HTML form with the ingredient data.
              */
             self.saveIngredient = function (ingredientForm) {
                 if (ingredientForm.$valid) {
@@ -34,7 +34,7 @@
                             ToastService.successToast('Ingredient saved!');
                         })
                         .catch(function (error) {
-                            ToastService.errorToast('Recipe could not be savedIngredient could not be saved.');
+                            ToastService.errorToast('Ingredient could not be saved.');
                             console.error(error);
                         });
                 }
