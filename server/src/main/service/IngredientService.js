@@ -20,9 +20,7 @@
      */
     IngredientService.createIngredient = function (userToken, ingredient) {
         return UserService.getUserByAccessToken(userToken)
-            .then(function (user) {
-                ingredient.userId = user.user_id;
-
+            .then(function () {
                 return new Ingredient(ingredient).save()
                     .then(function (persistedRecipe) {
                         return persistedRecipe.toObject();

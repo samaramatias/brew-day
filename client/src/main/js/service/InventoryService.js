@@ -21,6 +21,21 @@
             };
 
             /**
+             * Create a new inventory.
+             *
+             * @param {Object} inventory Inventory to be created.
+             * @returns {Promise} Promise with the created inventory.
+             */
+            self.createInventory = function (inventory) {
+                return $http.post(inventoryApi, inventory)
+                    .then(function (response) {
+                        return {
+                            data: new Inventory(response.data)
+                        }
+                    })
+            };
+
+            /**
              * Load a user's inventory from the server.
              *
              * @returns {Promise} Promise with the inventory.

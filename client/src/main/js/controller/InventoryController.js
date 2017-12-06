@@ -7,8 +7,8 @@
      * Controller of the inventory page.
      *
      */
-    inventoryModule.controller('InventoryModule', ['$state', '$stateParams', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
-        function ($state, $stateParams, InventoryService, Inventory, Ingredient, ToastService, ModalService) {
+    inventoryModule.controller('InventoryModule', ['$state', '$stateParams', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService', 'IngredientService',
+        function ($state, $stateParams, InventoryService, Inventory, Ingredient, ToastService, ModalService, IngredientService) {
             var self = this;
 
             self.Ingredient = new Ingredient();
@@ -17,24 +17,24 @@
             /**
              * Add a new ingredient to the ingredient list of the inventory.
              */
-            self.addIngredient = function () {
-                self.inventory.ingredients.push(new Ingredient());
+            self.addIngredient = function (ingredient) {
+                self.inventory.ingredients.push(ingredient);
             };
 
             /**
              * Save a new recipe.
              *
-             * @param {Object} recipeForm HTML form with the recipe data.
+             * @param {Object} ingredientForm HTML form with the recipe data.
              */
-            self.saveIngredient = function (recipeForm) {
-                if (recipeForm.$valid) {
+            self.saveIngredient = function (ingredientForm) {
+                if (ingredientForm.$valid) {
                     IngredientService.createIngredient(self.Ingredient)
-                        .then(function () {
-                            ToastService.successToast('Recipe saved!');
-                            $state.go('app.recipes');
+                        .then(function (result) {
+                            addIngredient(result);
+                            ToastService.successToast('Ingredient saved!');
                         })
                         .catch(function (error) {
-                            ToastService.errorToast('Recipe could not be saved.');
+                            ToastService.errorToast('Recipe could not be savedIngredient could not be saved.');
                             console.error(error);
                         });
                 }
