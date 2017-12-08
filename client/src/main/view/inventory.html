@@ -1,0 +1,19 @@
+<md-content layout-sm='column' layout-gt-sm='row' layout-align-gt-sm='center start' layout-padding layout-wrap>
+    <md-card 'inventory in inventoryCtrl.inventory' flex-sm flex-gt-sm='25'
+             ui-sref='app.recipeId({recipeId: recipe._id})' class='card-button'>
+
+    <md-card-title>
+        <md-card-title-text layout='column' layout-align='center center' layout-padding>
+            <span class='md-headline'>Ingredients</span>
+            <md-card-title-text layout='column' layout-align='start center'>
+                <span class='md-headline'>{{inventory.name | limitTo: 30}}{{inventory.name.length > 30 ? '&hellip;' : ''}}</span>
+            </md-card-title-text>
+        </md-card-title-text>
+    </md-card-title>
+    </md-card>
+</md-content>
+
+
+
+
+
