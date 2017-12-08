@@ -8,12 +8,14 @@
     var InventorySchema = new mongoose.Schema({
         userId: {
             type: String,
-            required: [true, 'An inventory needs an user associated with it.']
+            required: [true, 'An Inventory needs an user associated with it.']
         },
         ingredients: {
-            type: [Ingredient]
+            type: [Ingredient],
+            required: [true, 'An Inventory needs ingredients.']
         }
     });
-
     module.exports = mongoose.model('Inventory', InventorySchema);
 })();
+
+
