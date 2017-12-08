@@ -11,8 +11,7 @@
             required: [true, 'An Inventory needs an user associated with it.']
         },
         ingredients: {
-            type: [Ingredient],
-            required: [true, 'An Inventory needs ingredients.']
+            type: [Ingredient]
         }
     });
     module.exports = mongoose.model('Inventory', InventorySchema);

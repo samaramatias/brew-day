@@ -52,12 +52,20 @@
         return UserService.getUserByAccessToken(userToken)
             .then(function (user) {
                 var params = {
-                    userId: user.user_id,
+                    userId: user.user_id
+
                 };
 
-                Inventory.ingredients.id(ingredientId).remove();
-                console.log(inventory.ingredients)
-                //return Inventory.ingredients.findById(ingredientId).remove(params).exec();
+                Inventory.findOne(params).exec()
+                    .then(function (inventory) {
+                        inventory.ingredients.id(ingredientId).remove();
+                        return inventory.save(function (err) {
+                            if(err) console.log(err.message);
+                        });
+
+                    });
+
+                //return Inventory.remove(params);
             });
     };
 
