@@ -11,6 +11,12 @@
      */
     var InventoryService = {};
 
+    /**
+     * Get the invetory of the user requesting them.
+     *
+     * @param {String} userToken Access token of the user.
+     * @returns {Promise} Promise with the inventory.
+     */
     InventoryService.getInventory = function (userToken) {
         return UserService.getUserByAccessToken(userToken)
             .then(function (user) {
@@ -53,7 +59,6 @@
             .then(function (user) {
                 var params = {
                     userId: user.user_id
-
                 };
 
                 Inventory.findOne(params).exec()
@@ -64,8 +69,6 @@
                         });
 
                     });
-
-                //return Inventory.remove(params);
             });
     };
 

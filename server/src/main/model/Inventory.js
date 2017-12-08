@@ -14,6 +14,7 @@
             type: [Ingredient]
         }
     });
+
     module.exports = mongoose.model('Inventory', InventorySchema);
 })();
 
