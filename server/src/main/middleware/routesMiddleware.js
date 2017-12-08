@@ -32,6 +32,10 @@
             res.sendFile(clientFilesPath + '/index.html');
         });
 
+        app.put('/', function (req, res){
+            res.sendFile(clientFilesPath + 'index.html');
+        }
+
         app.use('/api/recipe', authCheck, recipeRouter);
         app.use('/api/inventory', authCheck, inventoryRouter);
     };

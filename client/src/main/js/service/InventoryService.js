@@ -33,6 +33,36 @@
                         }
                     });
             };
+            /**
+             * Load a recipe from the server.
+             *
+             * @param {int} ingredientId ID of the ingredient.
+             * @returns {Promise} Promise with the ingredient.
+             */
+            self.getIngredient = function (ingredientId) {
+                return $http.get(inventoryApi + '/' + ingredientId)
+                    .then(function (response) {
+                        return {
+                            data: new Recipe(response.data)
+                        };
+                    });
+            };
+            /**
+             * Update an existing ingredient.
+             *
+             * @param {Object} ingredient   Ingredient to be updated.
+             * @returns {Promise}       Promise with the updated ingredient.
+             */
+            self.updateIngredient = function (ingredient) {
+                return $http.put(inventoryApi + '/' + ingredient._id, ingredient)
+                    .then(function (response) {
+                        return {
+                            data: new Ingredient(response.data)
+                        }
+                    });
+            };
+
+
         }
     ]);
 })();
