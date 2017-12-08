@@ -21,8 +21,8 @@
                 Object.assign(this, inventory);
 
                 this._organizeIngredients();
-            }
 
+            }
             Inventory.prototype.constructor = Inventory;
 
             /**

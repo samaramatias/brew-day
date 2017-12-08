@@ -8,14 +8,14 @@
      */
     recipeModule.factory('Recipe', ['Ingredient', 'Equipment',
         function (Ingredient, Equipment) {
-
             /**
              * Factory constructor of a recipe.
              *
              * @param {Object} recipe Recipe object with the recipe data.
              * @constructor
              */
-            function Recipe(recipe) {
+
+             function Recipe(recipe) {
                 this._id = undefined;
                 this.userId = undefined;
                 this.name = undefined;
