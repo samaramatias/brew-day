@@ -6,8 +6,8 @@
     /**
      * Controller of the recipes page.
      */
-    recipeModule.controller('RecipesController', ['InventoryService', 'ToastService',
-        function (InventoryService, ToastService) {
+    recipeModule.controller('RecipesController', ['RecipeService', 'ToastService',
+        function (RecipeService, ToastService) {
             var self = this;
 
             self.recipes = [];

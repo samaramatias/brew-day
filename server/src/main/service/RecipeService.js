@@ -17,7 +17,7 @@
      * @param {String} userToken Access token of the user.
      * @returns {Promise} Promise with the list of recipes.
      */
-    RecipeService.updateIngredient = function (userToken) {
+    RecipeService.getRecipes = function (userToken) {
         return UserService.getUserByAccessToken(userToken)
             .then(function (user) {
                 var params = {
@@ -35,7 +35,7 @@
      * @param {int} recipeId ID of the recipe.
      * @returns {Promise} Promise with the recipe.
      */
-    RecipeService.getIngredient = function (userToken, recipeId) {
+    RecipeService.getRecipe = function (userToken, recipeId) {
         return UserService.getUserByAccessToken(userToken)
             .then(function (user) {
                 var params = {

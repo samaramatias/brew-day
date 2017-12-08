@@ -24,8 +24,6 @@
         MANAGER_SECRET: process.env.BREWDAY_MANAGER_SECRET
     };
 
-
-
     /**
      * Get the user access token from the request headers.
      *

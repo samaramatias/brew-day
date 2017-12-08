@@ -6,7 +6,7 @@
     /**
      * Service for operations with recipes.
      */
-    recipeModule.service('InventoryService', ['$rootScope', '$http', 'Recipe',
+    recipeModule.service('RecipeService', ['$rootScope', '$http', 'Recipe',
         function ($rootScope, $http, Recipe) {
             var self = this;
 
@@ -40,7 +40,7 @@
              * @param {int} recipeId ID of the recipe.
              * @returns {Promise} Promise with the recipe.
              */
-            self.getIngredient = function (recipeId) {
+            self.loadRecipe = function (recipeId) {
                 return $http.get(recipeApi + '/' + recipeId)
                     .then(function (response) {
                         return {

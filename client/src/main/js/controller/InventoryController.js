@@ -5,8 +5,8 @@
     /**
      * Controller of the inventory page.
      */
-    inventoryModule.controller('InventoryController', ['$state', '$stateParams', 'InventoryService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
-        function ($state, $stateParams, InventoryService, Recipe, InventoryService, Inventory, Ingredient, ToastService, ModalService
+    inventoryModule.controller('InventoryController', ['$state', '$stateParams', 'InventoryService', 'RecipeService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
+        function ($state, $stateParams, InventoryService, RecipeService, Recipe, InventoryService, Inventory, Ingredient, ToastService, ModalService
         function (InventoryService, ToastService) {
             var self = this;
 

@@ -19,7 +19,7 @@
      * @returns {Promise} Promise with the list of recipes.
      */
     recipeRouter.get(['', '/'], function (req, res) {
-        return RecipeService.updateIngredient(_.getToken(req))
+        return RecipeService.getRecipes(_.getToken(req))
             .then(function (response) {
                 return res.status(_.OK).json(response);
             })
@@ -35,7 +35,7 @@
      * @returns {Promise} Promise with the recipe.
      */
     recipeRouter.get('/:recipeId', function (req, res) {
-        return RecipeService.getIngredient(_.getToken(req), req.params.recipeId)
+        return RecipeService.getRecipe(_.getToken(req), req.params.recipeId)
             .then(function (response) {
                 return res.status(_.OK).json(response);
             })

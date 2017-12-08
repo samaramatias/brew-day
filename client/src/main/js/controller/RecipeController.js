@@ -8,8 +8,8 @@
      *
      * TODO: Edit.
      */
-    recipeModule.controller('RecipeController', ['$state', '$stateParams', 'InventoryService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
-        function ($state, $stateParams, InventoryService, Recipe, InventoryService, Inventory, Ingredient, ToastService, ModalService) {
+    recipeModule.controller('RecipeController', ['$state', '$stateParams', 'RecipeService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
+        function ($state, $stateParams, RecipeService, Recipe, InventoryService, Inventory, Ingredient, ToastService, ModalService) {
             var self = this;
 
             self.recipe = new Recipe();
@@ -95,7 +95,7 @@
 
             (function () {
                 if (self.recipeId) {
-                    RecipeService.getIngredient(self.recipeId)
+                    RecipeService.loadRecipe(self.recipeId)
                         .then(function (response) {
                             self.recipe = response.data;
                         })

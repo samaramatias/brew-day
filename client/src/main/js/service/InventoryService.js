@@ -43,7 +43,7 @@
                 return $http.get(inventoryApi + '/' + ingredientId)
                     .then(function (response) {
                         return {
-                            data: new Recipe(response.data)
+                            data: new Ingredient(response.data)
                         };
                     });
             };

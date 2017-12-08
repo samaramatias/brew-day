@@ -28,7 +28,7 @@
      *
      * @returns {Promise} Promise with the updated ingredient.
      */
-    recipeRouter.put('/:ingredientId', function (req, res) {
+    inventoryRouter.put('/:ingredientId', function (req, res) {
         return InventoryService.updateIngredient(_.getToken(req), req.params.ingredientId, ingredient.body)
             .then(function (response) {
                 return res.status(_.OK).json(response);
