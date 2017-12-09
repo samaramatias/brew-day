@@ -79,7 +79,7 @@
             .then(function (user) {
                 return RecipeService._getMongooseRecipe(user.user_id, recipeId)
                     .then(function (recipeDb) {
-                        _.updateModel(recipeDb, recipe);
+                        _.copyModel(recipeDb, recipe);
 
                         return recipeDb.save()
                             .then(function (persistedRecipe) {

@@ -65,7 +65,7 @@
      * @param {Object} toObject Mongoose object that will receive the properties.
      * @param {Object} fromObject Object that will provide the properties to be copied.
      */
-    _.updateModel = function (toObject, fromObject) {
+    _.copyModel = function (toObject, fromObject) {
         _.each(fromObject, function (value, key) {
             if (_.contains(key, '_')) {
                 return;
