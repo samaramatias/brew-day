@@ -61,6 +61,22 @@
     });
 
     /**
+     * PUT /api/recipe/:recipeId
+     * Update an existing recipe.
+     *
+     * @returns {Promise} Promise with the updated recipe.
+     */
+    recipeRouter.put('/:recipeId', function (req, res) {
+        return RecipeService.updateRecipe(_.getToken(req), req.params.recipeId, req.body)
+            .then(function (response) {
+                return res.status(_.OK).json(response);
+            })
+            .catch(function (error) {
+                return res.status(error.status || _.BAD_REQUEST).json(error.message || error);
+            });
+    });
+
+    /**
      * DELETE /api/recipe/:recipeId
      * Delete the recipe that has the given ID.
      *

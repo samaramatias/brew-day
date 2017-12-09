@@ -67,7 +67,6 @@ md-toast.md-warning-toast-theme .md-toast-content {
 
 .fade-element.ng-hide {
     opacity: 0;
-    transform: translateY(-100%);
 }
 
 .fade-element.ng-hide-add,
