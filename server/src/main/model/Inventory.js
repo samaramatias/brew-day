@@ -8,7 +8,7 @@
     var InventorySchema = new mongoose.Schema({
         userId: {
             type: String,
-            required: [true, 'An Inventory needs an user associated with it.']
+            required: [true, 'An inventory needs an user associated with it.']
         },
         ingredients: {
             type: [Ingredient]

@@ -12,7 +12,7 @@
     var InventoryService = {};
 
     /**
-     * Get the invetory of the user requesting them.
+     * Get the invetory of the user requesting it.
      *
      * @param {String} userToken Access token of the user.
      * @returns {Promise} Promise with the inventory.
@@ -51,7 +51,7 @@
      * Delete an ingredient from inventory of the user that has the given ID.
      *
      * @param {String} userToken Access token of the user.
-     * @param {int} ingredientId ID of the ingredient from Inventory.
+     * @param {int} ingredientId ID of the ingredient from inventory.
      * @returns {Promise} Promise with the result of the operation.
      */
     InventoryService.deleteIngredient = function (userToken, ingredientId) {
@@ -61,13 +61,15 @@
                     userId: user.user_id
                 };
 
-                Inventory.findOne(params).exec()
+                return Inventory.findOne(params).exec()
                     .then(function (inventory) {
-                        inventory.ingredients.id(ingredientId).remove();
-                        return inventory.save(function (err) {
-                            if(err) console.log(err.message);
-                        });
-
+                        return inventory.ingredients.id(ingredientId).remove()
+                            .then(function (persistedInventory) {
+                                return inventory.save()
+                                    .then(function (persistedInventory) {
+                                        return persistedInventory.toObject();
+                                    });
+                            });
                     });
             });
     };

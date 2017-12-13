@@ -12,6 +12,12 @@
      */
     var inventoryRouter = express.Router();
 
+    /**
+     * GET /api/inventory.
+     * Get the invetory of the user requesting it.
+     *
+     * @returns {Promise} Promise with the inventory.
+     */
     inventoryRouter.get(['', '/'], function (req, res) {
         return InventoryService.getInventory(_.getToken(req))
             .then(function (response) {
@@ -39,12 +45,12 @@
     });
 
     /**
-     * DELETE /api/inventory/:ingredientId
+     * DELETE /api/inventory/ingredients/:ingredientId
      * Delete the ingredient from inventory that has the given ID.
      *
      * @returns {Promise} Promise with the result of the operation.
      */
-    inventoryRouter.delete('/:ingredientId', function (req, res) {
+    inventoryRouter.delete('/ingredients/:ingredientId', function (req, res) {
         return InventoryService.deleteIngredient(_.getToken(req), req.params.ingredientId)
             .then(function (response) {
                 return res.status(_.OK).json(response);
