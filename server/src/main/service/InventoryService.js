@@ -12,7 +12,7 @@
     var InventoryService = {};
 
     /**
-     * Get the invetory of the user requesting it.
+     * Get the inventory of the user requesting it.
      *
      * @param {String} userToken Access token of the user.
      * @returns {Promise} Promise with the inventory.
@@ -48,7 +48,7 @@
     };
 
     /**
-     * Delete an ingredient from inventory of the user that has the given ID.
+     * Delete an ingredient from the inventory of the user that has the given ID.
      *
      * @param {String} userToken Access token of the user.
      * @param {int} ingredientId ID of the ingredient from inventory.
