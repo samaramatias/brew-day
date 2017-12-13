@@ -5,8 +5,6 @@
 
     /**
      * Controller of the recipe page.
-     *
-     * TODO: Edit.
      */
     recipeModule.controller('RecipeController', ['$state', '$stateParams', 'RecipeService', 'Recipe', 'InventoryService', 'Inventory', 'Ingredient', 'ToastService', 'ModalService',
         function ($state, $stateParams, RecipeService, Recipe, InventoryService, Inventory, Ingredient, ToastService, ModalService) {
@@ -17,6 +15,7 @@
             self.inventory = new Inventory();
             self.recipeId = $stateParams.recipeId;
             self.editMode = false;
+            self.oldRecipe = undefined;
 
             self.volumeUnits = RecipeService.volumeUnits;
             self.readableVolumeUnits = _.keys(self.volumeUnits);
@@ -29,6 +28,12 @@
              */
             self.toggleEditMode = function () {
                 self.editMode = !self.editMode;
+
+                if (self.editMode) {
+                    self.oldRecipe = angular.copy(self.recipe);
+                } else {
+                    self.recipe = angular.copy(self.oldRecipe);
+                }
             };
 
             /**
@@ -63,15 +68,27 @@
              */
             self.saveRecipe = function (recipeForm) {
                 if (recipeForm.$valid) {
-                    RecipeService.createRecipe(self.recipe)
-                        .then(function () {
-                            ToastService.successToast('Recipe saved!');
-                            $state.go('app.recipes');
-                        })
-                        .catch(function (error) {
-                            ToastService.errorToast('Recipe could not be saved.');
-                            console.error(error);
-                        });
+                    if (self.editMode) {
+                        RecipeService.updateRecipe(self.recipe)
+                            .then(function () {
+                                ToastService.successToast('Recipe edited!');
+                                $state.go('app.recipes');
+                            })
+                            .catch(function (error) {
+                                ToastService.errorToast('Recipe could not be edited.');
+                                console.error(error);
+                            });
+                    } else {
+                        RecipeService.createRecipe(self.recipe)
+                            .then(function () {
+                                ToastService.successToast('Recipe saved!');
+                                $state.go('app.recipes');
+                            })
+                            .catch(function (error) {
+                                ToastService.errorToast('Recipe could not be saved.');
+                                console.error(error);
+                            });
+                    }
                 }
             };
 

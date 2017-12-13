@@ -1,28 +1,16 @@
 <!-- Visualizing recipe -->
-<md-content ng-if='recipeCtrl.recipeId' layout='column' layout-align='center center' layout-padding>
+<md-content ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode' layout='column' layout-align='center center'
+            layout-padding class='fade-element'>
     <md-card class='created-recipe-card'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='center center' layout-padding>
                 <span class='md-headline' layout='row' layout-align='center center'>
-                    <md-button class='md-icon-button fade-element'
-                               ng-show='recipeCtrl.editMode'>
-                        <md-icon class='md-48'>done</md-icon>
-                    </md-button>
-
-                    <md-button class='md-icon-button fade-element'
-                               ng-show='recipeCtrl.editMode'
-                               ng-click='recipeCtrl.toggleEditMode()'>
-                        <md-icon class='md-48'>clear</md-icon>
-                    </md-button>
-
-                    <md-button class='md-icon-button fade-element'
-                               ng-show='!recipeCtrl.editMode'
+                    <md-button class='md-icon-button'
                                ng-click='recipeCtrl.toggleEditMode()'>
                         <md-icon class='md-48'>mode_edit</md-icon>
                     </md-button>
 
-                    <md-button class='md-icon-button fade-element'
-                               ng-show='!recipeCtrl.editMode'
+                    <md-button class='md-icon-button'
                                ng-click='recipeCtrl.deleteRecipe()'>
                         <md-icon class='md-48'>delete</md-icon>
                     </md-button>
@@ -61,7 +49,8 @@
 </md-content>
 
 <!-- Creating recipe -->
-<div ng-if='!recipeCtrl.recipeId' layout='column' layout-align='center center' layout-padding>
+<div ng-show='!recipeCtrl.recipeId || recipeCtrl.editMode' layout='column' layout-align='center center' layout-padding
+     class='fade-element'>
     <md-card>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='center center' layout-padding>
@@ -84,7 +73,7 @@
                     </md-button>
                 </span>
 
-                <span class='md-headline'>New Recipe</span>
+                <span class='md-headline'>{{recipeCtrl.recipe.name}}</span>
             </md-card-title-text>
         </md-card-title>
 
@@ -196,7 +185,8 @@
                         <md-icon class='md-48'>done</md-icon>
                     </md-button>
 
-                    <md-button aria-label='Clear recipe' class='md-icon-button' ng-click='recipeCtrl.clearRecipe()'>
+                    <md-button ng-show='recipeCtrl.editMode' aria-label='Cancel edition' class='md-icon-button'
+                               ng-click='recipeCtrl.toggleEditMode()'>
                         <md-icon class='md-48'>clear</md-icon>
                     </md-button>
                 </span>

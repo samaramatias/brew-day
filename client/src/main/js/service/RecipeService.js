@@ -61,7 +61,22 @@
                         return {
                             data: new Recipe(response.data)
                         }
-                    })
+                    });
+            };
+
+            /**
+             * Update an existing recipe.
+             *
+             * @param {Object} recipe Recipe to be updated.
+             * @returns {Promise} Promise with the updated recipe.
+             */
+            self.updateRecipe = function (recipe) {
+                return $http.put(recipeApi + '/' + recipe._id, recipe)
+                    .then(function (response) {
+                        return {
+                            data: new Recipe(response.data)
+                        }
+                    });
             };
 
             /**
