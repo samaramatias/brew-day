@@ -64,7 +64,7 @@
                 return Inventory.findOne(params).exec()
                     .then(function (inventory) {
                         return inventory.ingredients.id(ingredientId).remove()
-                            .then(function (persistedInventory) {
+                            .then(function () {
                                 return inventory.save()
                                     .then(function (persistedInventory) {
                                         return persistedInventory.toObject();
