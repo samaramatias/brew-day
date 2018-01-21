@@ -1,0 +1,68 @@
+<md-content layout='column' layout-align='center center' layout-padding>
+    <md-card>
+        <md-card-content class='md-inline-form' layout='row'>
+            <form name='inventoryForm' layout='column'>
+                <span ng-repeat='ingredient in inventoryCtrl.inventory.ingredients'>
+                    <div layout='column' layout-align='center center'>
+                        <div layout='row' layout-fill>
+                            <md-input-container class='md-icon-float md-block'>
+                                <label>Ingredient Name</label>
+                                <md-icon class='md-48'>shopping_basket</md-icon>
+                                <input required name='ingredientName' ng-model='ingredient.name'>
+
+                                <div ng-messages='inventoryForm.ingredientName.$error'>
+                                    <div ng-message='required'>This is required.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class='md-block'>
+                                <label>Ingredient Quantity</label>
+                                <input required type='number' step='any' name='ingredientQuantity'
+                                       ng-model='ingredient.quantity' min='0'/>
+
+                                <div ng-messages='inventoryForm.ingredientQuantity.$error' multiple>
+                                    <div ng-message='required'>
+                                        This is required.
+                                    </div>
+
+                                    <div ng-message='min'>
+                                        Needs to be at least zero.
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class='md-block'>
+                                <label>Unit</label>
+                                <md-select required name='ingredientUnit' ng-model='ingredient.unit'>
+                                    <md-option ng-repeat='unit in inventoryCtrl.readableQuantityUnits'
+                                               value='{{inventoryCtrl.quantityUnits[unit]}}'>
+                                        {{unit}}
+                                    </md-option>
+                                </md-select>
+                                <md-icon class='clickable' ng-click='inventoryCtrl.deleteIngredient(ingredient)'
+                                         class='md-48'>delete</md-icon>
+
+                                <div ng-messages='inventoryForm.ingredientUnit.$error'>
+                                    <div ng-message='required'>This is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </span>
+
+                <span layout='row' layout-align='center center'>
+                    <md-button aria-label='Add ingredient' class='md-icon-button'
+                               ng-click='inventoryCtrl.addIngredient()'>
+                        <md-icon class='md-48'>add</md-icon>
+                    </md-button>
+
+                    <md-button type='submit' aria-label='Save inventory' class='md-icon-button'
+                               ng-click='inventoryCtrl.saveInventory(inventoryForm)'
+                               ng-disabled='inventoryForm.$invalid'>
+                        <md-icon class='md-48'>done</md-icon>
+                    </md-button>
+                </span>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>

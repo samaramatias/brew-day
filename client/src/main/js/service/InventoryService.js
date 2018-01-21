@@ -33,6 +33,46 @@
                         }
                     });
             };
+
+            /**
+             * Create a new inventory.
+             *
+             * @param {Object} inventory Inventory to be created.
+             * @returns {Promise} Promise with the created inventory.
+             */
+            self.createInventory = function (inventory) {
+                return $http.post(inventoryApi, inventory)
+                    .then(function (response) {
+                        return {
+                            data: new Inventory(response.data)
+                        }
+                    });
+            };
+
+            /**
+             * Update an existing inventory.
+             *
+             * @param {Object} inventory Inventory to be updated.
+             * @returns {Promise} Promise with the updated inventory.
+             */
+            self.updateInventory = function (inventory) {
+                return $http.put(inventoryApi + '/' + inventory._id, inventory)
+                    .then(function (response) {
+                        return {
+                            data: new Inventory(response.data)
+                        }
+                    });
+            };
+
+            /**
+             * Delete an ingredient from the inventory.
+             *
+             * @param {int} ingredientId ID of the ingredient.
+             * @returns {Promise} Promise with the result of the operation.
+             */
+            self.deleteIngredient = function (ingredientId) {
+                return $http.delete(inventoryApi + '/ingredients/' + ingredientId);
+            };
         }
     ]);
 })();

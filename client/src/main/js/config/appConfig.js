@@ -68,6 +68,11 @@
                     url: '/recipe/:recipeId',
                     templateUrl: '/view/recipe.html',
                     controller: 'RecipeController as recipeCtrl'
+                })
+                .state('app.inventory', {
+                    url: '/inventory',
+                    templateUrl: '/view/inventory.html',
+                    controller: 'InventoryController as inventoryCtrl'
                 });
 
             $locationProvider.html5Mode(true);

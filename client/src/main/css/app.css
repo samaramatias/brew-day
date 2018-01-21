@@ -50,6 +50,10 @@ md-toast.md-warning-toast-theme .md-toast-content {
     cursor: pointer;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .card-button:hover {
     background-color: rgba(158, 158, 158, 0.2);
     transition: 0.3s;

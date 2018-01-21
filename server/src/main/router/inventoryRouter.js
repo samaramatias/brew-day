@@ -45,6 +45,22 @@
     });
 
     /**
+     * PUT /api/inventory/:inventoryId
+     * Update an existing inventory.
+     *
+     * @returns {Promise} Promise with the updated inventory.
+     */
+    inventoryRouter.put('/:inventoryId', function (req, res) {
+        return InventoryService.updateInventory(_.getToken(req), req.params.inventoryId, req.body)
+            .then(function (response) {
+                return res.status(_.OK).json(response);
+            })
+            .catch(function (error) {
+                return res.status(error.status || _.BAD_REQUEST).json(error.message || error);
+            });
+    });
+
+    /**
      * DELETE /api/inventory/ingredients/:ingredientId
      * Delete the ingredient from inventory that has the given ID.
      *
