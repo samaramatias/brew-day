@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
+    var mongoose = require('mongoose');
     var UserService = require('./UserService');
     var _ = require('../util/util');
-
-    var Inventory = require('../model/Inventory');
+    var Inventory = mongoose.model('Inventory', require('../model/Inventory'));
 
     /**
      * Service that handles all the logic and complex operations that involves the inventory.

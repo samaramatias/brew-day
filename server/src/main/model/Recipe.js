@@ -32,5 +32,5 @@
         }
     });
 
-    module.exports = mongoose.model('Recipe', RecipeSchema);
+    module.exports = RecipeSchema;
 })();
