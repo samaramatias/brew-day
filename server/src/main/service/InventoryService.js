@@ -12,7 +12,7 @@
     var InventoryService = {};
 
     /**
-     * Get the invetory of the user requesting it.
+     * Get the inventory of the user requesting it.
      *
      * @param {String} userToken Access token of the user.
      * @returns {Promise} Promise with the inventory.
@@ -24,7 +24,7 @@
                     userId: user.user_id
                 };
 
-                return Inventory.find(params).lean().exec();
+                return Inventory.findOne(params).lean().exec();
             });
     };
 
@@ -48,7 +48,30 @@
     };
 
     /**
-     * Delete an ingredient from inventory of the user that has the given ID.
+     * Update an existing inventory.
+     *
+     * @param {String} userToken Access token of the user.
+     * @param {int} inventoryId ID of the inventory.
+     * @param {Object} inventory Inventory to be updated.
+     * @returns {Promise} Promise with the updated inventory.
+     */
+    InventoryService.updateInventory = function (userToken, inventoryId, inventory) {
+        return UserService.getUserByAccessToken(userToken)
+            .then(function (user) {
+                return InventoryService._getMongooseInventory(user.user_id, inventoryId)
+                    .then(function (inventoryDb) {
+                        _.copyModel(inventoryDb, inventory);
+
+                        return inventoryDb.save()
+                            .then(function (persistedInventory) {
+                                return persistedInventory.toObject();
+                            });
+                    });
+            });
+    };
+
+    /**
+     * Delete an ingredient from the inventory of the user that has the given ID.
      *
      * @param {String} userToken Access token of the user.
      * @param {int} ingredientId ID of the ingredient from inventory.
@@ -72,6 +95,23 @@
                             });
                     });
             });
+    };
+
+    /**
+     * Private method to retrieve an inventory as a Mongoose object.
+     *
+     * @param {int} userId ID of the user that has the inventory.
+     * @param {int} inventoryId ID of the inventory.
+     * @returns {Promise} Promise with the result of the operation.
+     * @private
+     */
+    InventoryService._getMongooseInventory = function (userId, inventoryId) {
+        var params = {
+            userId: userId,
+            _id: inventoryId
+        };
+
+        return Inventory.findOne(params).exec();
     };
 
     module.exports = InventoryService;
