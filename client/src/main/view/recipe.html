@@ -17,6 +17,7 @@
                 </span>
 
                 <span class='md-headline'>{{recipeCtrl.recipe.name}}</span>
+
             </md-card-title-text>
         </md-card-title>
 
@@ -105,6 +106,8 @@
                                 Needs to be at least zero.
                             </div>
                         </div>
+
+                        <md-button class='md-primary md-hue-1' ng-click='recipeCtrl.refreshIngredients()' align='center'>Atualizar proporções</md-button>
                     </md-input-container>
 
                     <md-input-container class='md-icon-float md-block'>

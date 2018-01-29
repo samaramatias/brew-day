@@ -23,11 +23,14 @@
             self.quantityUnits = InventoryService.quantityUnits;
             self.readableQuantityUnits = _.keys(self.quantityUnits);
 
+            var oldVolume = undefined;
+
             /**
              * Enter or exit the edit mode of a recipe.
              */
             self.toggleEditMode = function () {
                 self.editMode = !self.editMode;
+                this.oldVolume = undefined;
 
                 if (self.editMode) {
                     self.oldRecipe = angular.copy(self.recipe);
@@ -51,6 +54,29 @@
                 if (self.recipe.ingredients.length > 1) {
                     self.recipe.ingredients.pop();
                 }
+            };
+
+            /**
+             *  TODO
+             */
+            self.refreshIngredients = function () {
+                if (this.oldVolume === undefined) {
+                    this.oldVolume = self.oldRecipe.equipment.volume;
+                }
+
+                var newVolume = self.recipe.equipment.volume;
+
+                var percent =  newVolume / this.oldVolume;
+
+                console.log(this.oldVolume);
+                console.log(newVolume);
+                console.log(percent);
+
+                for (var i = 0; i < self.recipe.ingredients.length; i++) {
+                    self.recipe.ingredients[i].quantity *= percent;
+                };
+
+                this.oldVolume = newVolume;
             };
 
             /**
