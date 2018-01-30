@@ -16,21 +16,20 @@
             self.recipeId = $stateParams.recipeId;
             self.editMode = false;
             self.oldRecipe = undefined;
-
             self.volumeUnits = RecipeService.volumeUnits;
             self.readableVolumeUnits = _.keys(self.volumeUnits);
 
             self.quantityUnits = InventoryService.quantityUnits;
             self.readableQuantityUnits = _.keys(self.quantityUnits);
 
-            var oldVolume = undefined;
+            self.oldVolume = undefined;
 
             /**
              * Enter or exit the edit mode of a recipe.
              */
             self.toggleEditMode = function () {
                 self.editMode = !self.editMode;
-                this.oldVolume = undefined;
+                self.oldVolume = undefined;
 
                 if (self.editMode) {
                     self.oldRecipe = angular.copy(self.recipe);
@@ -59,24 +58,31 @@
             /**
              *  TODO
              */
-            self.refreshIngredients = function () {
-                if (this.oldVolume === undefined) {
-                    this.oldVolume = self.oldRecipe.equipment.volume;
+            self.ingredientQuantityUpdate = function () {
+                if (self.oldVolume === undefined) {
+                    self.oldVolume = self.oldRecipe.equipment.volume;
                 }
 
                 var newVolume = self.recipe.equipment.volume;
 
-                var percent =  newVolume / this.oldVolume;
-
-                console.log(this.oldVolume);
-                console.log(newVolume);
-                console.log(percent);
+                var percent =  newVolume / self.oldVolume;
 
                 for (var i = 0; i < self.recipe.ingredients.length; i++) {
                     self.recipe.ingredients[i].quantity *= percent;
                 };
 
-                this.oldVolume = newVolume;
+                self.oldVolume = newVolume;
+            };
+
+            /**
+             *  Converts equipment volume according to the volumeUnits
+             */
+            self.volumeUnitUpdate = function () {
+                if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
+                    self.recipe.equipment.volume *= 0.264172;
+                } else {
+                    self.recipe.equipment.volume *= 3.78541;
+                }
             };
 
             /**
