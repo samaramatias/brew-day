@@ -56,7 +56,7 @@
             };
 
             /**
-             *  TODO
+             *  Update ingredients proportions according to the new equipment volume
              */
             self.ingredientQuantityUpdate = function () {
                 if (self.oldVolume === undefined) {
@@ -68,7 +68,8 @@
                 var percent =  newVolume / self.oldVolume;
 
                 for (var i = 0; i < self.recipe.ingredients.length; i++) {
-                    self.recipe.ingredients[i].quantity *= percent;
+                    var aux = (self.recipe.ingredients[i].quantity * percent).toPrecision(4);
+                    self.recipe.ingredients[i].quantity = parseFloat(aux);
                 };
 
                 self.oldVolume = newVolume;
@@ -79,9 +80,11 @@
              */
             self.volumeUnitUpdate = function () {
                 if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
-                    self.recipe.equipment.volume *= 0.264172;
+                    var aux =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
+                    self.recipe.equipment.volume = parseFloat(aux);
                 } else {
-                    self.recipe.equipment.volume *= 3.78541;
+                    var aux =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
+                    self.recipe.equipment.volume = parseFloat(aux);
                 }
             };
 
