@@ -16,6 +16,7 @@
             self.recipeId = $stateParams.recipeId;
             self.editMode = false;
             self.oldRecipe = undefined;
+
             self.volumeUnits = RecipeService.volumeUnits;
             self.readableVolumeUnits = _.keys(self.volumeUnits);
 
@@ -59,17 +60,16 @@
              *  Update ingredients proportions according to the new equipment volume
              */
             self.ingredientQuantityUpdate = function () {
-                if (self.oldVolume === undefined) {
+                if (_.isUndefined(self.oldVolume)) {
                     self.oldVolume = self.oldRecipe.equipment.volume;
                 }
 
                 var newVolume = self.recipe.equipment.volume;
-
-                var percent =  newVolume / self.oldVolume;
+                var volumePercentVariation =  newVolume / self.oldVolume;
 
                 for (var i = 0; i < self.recipe.ingredients.length; i++) {
-                    var aux = (self.recipe.ingredients[i].quantity * percent).toPrecision(4);
-                    self.recipe.ingredients[i].quantity = parseFloat(aux);
+                    var newIngredientQuantity = (self.recipe.ingredients[i].quantity * volumePercentVariation).toPrecision(4);
+                    self.recipe.ingredients[i].quantity = parseFloat(newIngredientQuantity);
                 };
 
                 self.oldVolume = newVolume;
@@ -80,11 +80,11 @@
              */
             self.volumeUnitUpdate = function () {
                 if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
-                    var aux =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
-                    self.recipe.equipment.volume = parseFloat(aux);
+                    var newEquipmentVolume =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
+                    self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
                 } else {
-                    var aux =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
-                    self.recipe.equipment.volume = parseFloat(aux);
+                    var newEquipmentVolume =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
+                    self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
                 }
             };
 

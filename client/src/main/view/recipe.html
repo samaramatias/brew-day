@@ -106,8 +106,6 @@
                                 Needs to be at least zero.
                             </div>
                         </div>
-
-                        <md-button class='md-primary md-hue-1' ng-click='recipeCtrl.ingredientQuantityUpdate()' ng-show='recipeCtrl.editMode'>Atualizar proporções</md-button>
                     </md-input-container>
 
                     <md-input-container class='md-icon-float md-block'>
@@ -123,6 +121,15 @@
                             <div ng-message='required'>This is required.</div>
                         </div>
                     </md-input-container>
+
+                    <md-input-container>
+                        <md-button class="md-icon-button test-tooltip" aria-label="Refresh"
+                                   ng-click='recipeCtrl.ingredientQuantityUpdate()' ng-show='recipeCtrl.editMode'>
+                            <md-tooltip md-direction="left">Atualizar Proporções</md-tooltip>
+                            <md-icon class='md-48'>refresh</md-icon>
+                        </md-button>
+                    </md-input-container>
+
                 </div>
 
                 <div layout='column' layout-align='center center'>
@@ -185,11 +192,13 @@
                 <span layout='row' layout-align='center center'>
                     <md-button type='submit' aria-label='Save recipe' class='md-icon-button'
                                ng-click='recipeCtrl.saveRecipe(recipeForm)' ng-disabled='recipeForm.$invalid'>
+                        <md-tooltip md-direction="left">Salvar</md-tooltip>
                         <md-icon class='md-48'>done</md-icon>
                     </md-button>
 
                     <md-button ng-show='recipeCtrl.editMode' aria-label='Cancel edition' class='md-icon-button'
                                ng-click='recipeCtrl.toggleEditMode()'>
+                        <md-tooltip md-direction="left">Cancelar</md-tooltip>
                         <md-icon class='md-48'>clear</md-icon>
                     </md-button>
                 </span>
