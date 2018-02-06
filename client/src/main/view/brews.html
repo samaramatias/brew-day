@@ -1,0 +1,26 @@
+<md-content layout-sm='column' layout-gt-sm='row' layout-align-gt-sm='center start' layout-padding layout-wrap>
+    <md-card ng-repeat='brew in brewsCtrl.brews' flex-sm flex-gt-sm='25'
+             ui-sref='app.brewId({brewId: brew._id})' class='card-button'>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='start center'>
+                <span class='md-headline'>{{brew.recipe.name | limitTo: 30}}{{brew.recipe.name.length > 30 ? '&hellip;' : ''}}</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content layout='column' layout-align='center start'>
+            <p ng-if='brew.notes' layout='row'>
+                <md-icon class='md-48'>note</md-icon>
+                <md-card-content>
+                    {{brew.notes | limitTo: 200}}{{brew.notes.length > 200 ? '&hellip;' : ''}}
+                </md-card-content>
+            </p>
+
+            <p layout='row'>
+                <md-icon class='md-48'>access_time</md-icon>
+                <md-card-content>
+                    {{brew.creationDate | date: 'dd-MMM-yyyy'}}
+                </md-card-content>
+            </p>
+        </md-card-content>
+    </md-card>
+</md-content>

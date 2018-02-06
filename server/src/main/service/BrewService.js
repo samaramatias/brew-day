@@ -3,8 +3,10 @@
 (function () {
     var mongoose = require('mongoose');
     var UserService = require('./UserService');
+    var InventoryService = require('./InventoryService');
     var _ = require('../util/util');
     var Brew = mongoose.model('Brew', require('../model/Brew'));
+    var Ingredient = mongoose.model('Ingredient', require('../model/Ingredient'));
 
     /**
      * Service that handles all the logic and complex operations that involves a brew.
@@ -59,9 +61,21 @@
             .then(function (user) {
                 brew.userId = user.user_id;
 
-                return new Brew(brew).save()
-                    .then(function (persistedBrew) {
-                        return persistedBrew.toObject();
+                return InventoryService.getInventory(userToken)
+                    .then(function (inventory) {
+                        var error = BrewService._validateCreate(brew, inventory);
+
+                        if (error) {
+                            return Promise.reject(error);
+                        }
+
+                        return BrewService._updateIngredients(brew, inventory, userToken)
+                            .then(function () {
+                                return new Brew(brew).save()
+                                    .then(function (persistedBrew) {
+                                        return persistedBrew.toObject();
+                                    });
+                            });
                     });
             });
     };
@@ -82,7 +96,7 @@
                         var error = BrewService._validateUpdate(brew, brewDb);
 
                         if (error) {
-                            return $q.reject(error);
+                            return Promise.reject(error);
                         }
 
                         _.copyModel(brewDb, brew);
@@ -115,6 +129,24 @@
     };
 
     /**
+     * Validate a create operation.
+     *
+     * @param {Object} brew Brew to be created.
+     * @param {Object} inventory Inventory of the user.
+     * @returns {String} Error message, if there is one.
+     * @private
+     */
+    BrewService._validateCreate = function (brew, inventory) {
+        var error = '';
+
+        if (!BrewService._canBrew(brew.recipe, inventory)) {
+            error = 'Missing ingredients to brew recipe';
+        }
+
+        return error;
+    };
+
+    /**
      * Validate an update operation.
      *
      * @param {Object} brew Brew to be updated.
@@ -127,11 +159,51 @@
 
         if (brew.userId !== brewDb.userId) {
             error = 'Field userId can not be changed';
-        } else if (brew.recipe !== brewDb.recipe) {
+        } else if (brew.recipe._id.toString() !== brewDb.recipe._id.toString()) {
             error = 'Field recipe can not be changed';
         }
 
         return error;
+    };
+
+    /**
+     * Check if the user can brew a recipe.
+     *
+     * @param {Object} recipe Recipe to be checked.
+     * @param {Object} inventory Inventory with all the ingredients.
+     * @returns {Boolean} True if the user can brew the recipe. False otherwise.
+     */
+    BrewService._canBrew = function (recipe, inventory) {
+        for (var i = 0; i < recipe.ingredients.length; i++) {
+            if (!InventoryService.hasIngredient(recipe.ingredients[i], inventory)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    /**
+     * Update the quantity of the ingredients in the inventory after brewing a recipe.
+     *
+     * @param {Object} brew Brew that is being created.
+     * @param {Object} inventory Inventory with all the ingredients.
+     * @param {String} userToken Access token of the user.
+     * @returns {Promise} Promise with the result of the operation.
+     * @private
+     */
+    BrewService._updateIngredients = function (brew, inventory, userToken) {
+        _.each(brew.recipe.ingredients, function (ingredient) {
+            _.each(inventory.ingredients, function (invIngredient) {
+                ingredient = new Ingredient(ingredient);
+
+                if (invIngredient.name === ingredient.name) {
+                    var ingQuantity = ingredient.getQuantityInUnit(invIngredient.unit);
+                    invIngredient.quantity = (invIngredient.quantity - ingQuantity).toFixed(2);
+                }
+            });
+        });
+
+        return InventoryService.updateInventory(userToken, inventory._id, inventory);
     };
 
     /**
