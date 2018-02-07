@@ -79,13 +79,16 @@
              *  Converts equipment volume according to the volumeUnits
              */
             self.volumeUnitUpdate = function () {
-                if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
-                    var newEquipmentVolume =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
-                    self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
-                } else {
-                    var newEquipmentVolume =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
-                    self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
+                if (!_.isUndefined(self.oldRecipe)) {
+                    if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
+                        var newEquipmentVolume =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
+                        self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
+                    } else {
+                        var newEquipmentVolume =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
+                        self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
+                    }
                 }
+
             };
 
             /**
