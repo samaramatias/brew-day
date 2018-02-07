@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
+    var mongoose = require('mongoose');
     var UserService = require('./UserService');
     var _ = require('../util/util');
-
-    var Recipe = require('../model/Recipe');
+    var Recipe = mongoose.model('Recipe', require('../model/Recipe'));
 
     /**
-     * Service that handles all the logic and complex operations that involves the recipe.
+     * Service that handles all the logic and complex operations that involves a recipe.
      */
     var RecipeService = {};
 
@@ -111,7 +111,7 @@
     /**
      * Private method to retrieve a recipe as a Mongoose object.
      *
-     * @param {int} userId ID of the user that has the recipe.
+     * @param {String} userId ID of the user that has the recipe.
      * @param {int} recipeId ID of the recipe.
      * @returns {Promise} Promise with the result of the operation.
      * @private

@@ -59,6 +59,16 @@ md-toast.md-warning-toast-theme .md-toast-content {
     transition: 0.3s;
 }
 
+.green-card-button:hover {
+    background-color: rgba(0, 126, 51, 0.2);
+    transition: 0.3s;
+}
+
+.red-card-button:hover {
+    background-color: rgba(204, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
 .created-recipe-card {
     width: 50%;
 }
@@ -80,4 +90,17 @@ md-toast.md-warning-toast-theme .md-toast-content {
 
 .fade-element.ng-hide-add {
     display: none;
+}
+
+.green-tooltip {
+    background-color: #007E33 !important;
+}
+
+.red-tooltip {
+    background-color: #CC0000 !important;
+}
+
+.missing-ingredients-card {
+    width: 50%;
+    background-color: rgba(204, 0, 0, 0.2);
 }

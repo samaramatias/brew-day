@@ -1,6 +1,15 @@
 <md-content layout-sm='column' layout-gt-sm='row' layout-align-gt-sm='center start' layout-padding layout-wrap>
     <md-card ng-repeat='recipe in recipesCtrl.recipes' flex-sm flex-gt-sm='25'
-             ui-sref='app.recipeId({recipeId: recipe._id})' class='card-button'>
+             ui-sref='app.recipeId({recipeId: recipe._id})' class='card-button'
+             ng-class='{"green-card-button": recipesCtrl.canBrew(recipe), "red-card-button": !recipesCtrl.canBrew(recipe)}'>
+        <md-tooltip ng-if="recipesCtrl.canBrew(recipe)" md-direction='bottom' class='green-tooltip'>
+            Ready to Brew!
+        </md-tooltip>
+
+        <md-tooltip ng-if="!recipesCtrl.canBrew(recipe)" md-direction='bottom' class='red-tooltip'>
+            Missing Ingredients.
+        </md-tooltip>
+
         <md-card-title>
             <md-card-title-text layout='column' layout-align='start center'>
                 <span class='md-headline'>{{recipe.name | limitTo: 30}}{{recipe.name.length > 30 ? '&hellip;' : ''}}</span>

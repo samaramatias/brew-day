@@ -6,8 +6,8 @@
     /**
      * Service for operations with recipes.
      */
-    recipeModule.service('RecipeService', ['$rootScope', '$http', 'Recipe',
-        function ($rootScope, $http, Recipe) {
+    recipeModule.service('RecipeService', ['$rootScope', '$http', 'Recipe', 'InventoryService',
+        function ($rootScope, $http, Recipe, InventoryService) {
             var self = this;
 
             var recipeApi = $rootScope.apiRoot + '/recipe';
@@ -15,6 +15,22 @@
             self.volumeUnits = {
                 'Liters': 'L',
                 'Gallons': 'GL'
+            };
+
+            /**
+             * Check if the user can brew a recipe.
+             *
+             * @param {Object} recipe Recipe to be checked.
+             * @param {Object} inventory Inventory with all the ingredients.
+             * @returns {Boolean} True if the user can brew the recipe. False otherwise.
+             */
+            self.canBrew = function (recipe, inventory) {
+                for (var i = 0; i < recipe.ingredients.length; i++) {
+                    if (!InventoryService.hasIngredient(recipe.ingredients[i], inventory)) {
+                        return false;
+                    }
+                }
+                return true;
             };
 
             /**

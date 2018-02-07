@@ -1,0 +1,94 @@
+<!-- Visualizing brew -->
+<md-content ng-cloak ng-show='brewCtrl.brewId' layout='column' layout-align='center center'
+            layout-padding>
+    <md-card class='created-recipe-card'>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='center center' layout-padding>
+                <span class='md-headline' layout='row' layout-align='center center'>
+                    <md-button class='md-icon-button'
+                               ng-click='brewCtrl.toggleEditMode()'>
+                        <md-icon class='md-48'>mode_edit</md-icon>
+                    </md-button>
+
+                    <md-button class='md-icon-button'
+                               ng-click='brewCtrl.deleteBrew()'>
+                        <md-icon class='md-48'>delete</md-icon>
+                    </md-button>
+                </span>
+
+                <span class='md-headline'>{{brewCtrl.brew.recipe.name}}</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content layout='column'>
+            <form name='brewForm' layout='column'>
+                <span layout='column' layout-align='center start'>
+                    <p layout='row'>
+                        <md-icon class='md-48'>description</md-icon>
+                        <md-card-content>
+                            {{brewCtrl.brew.recipe.directions}}
+                        </md-card-content>
+                    </p>
+
+                    <p layout='row'>
+                        <md-icon class='md-48'>shopping_basket</md-icon>
+                        <md-card-content>
+                            <span ng-repeat='ingredient in brewCtrl.brew.recipe.ingredients'>
+                                {{ingredient.toString()}}
+                                <br>
+                            </span>
+                        </md-card-content>
+                    </p>
+
+                    <p layout='row'>
+                        <md-icon class='md-48'>opacity</md-icon>
+                        <md-card-content>
+                            {{brewCtrl.brew.recipe.equipment.volume}} {{brewCtrl.brew.recipe.equipment.unit}}
+                        </md-card-content>
+                    </p>
+
+                    <p class='fade-element' ng-show='!brewCtrl.editMode' layout='row'>
+                        <md-icon class='md-48'>note</md-icon>
+                        <md-card-content>
+                            {{brewCtrl.brew.notes}}
+                        </md-card-content>
+                    </p>
+
+                    <md-input-container ng-show='brewCtrl.editMode' class='md-icon-float md-block fade-element'>
+                        <label>Notes</label>
+                        <md-icon class='md-48'>note</md-icon>
+                        <textarea name='brewNotes' ng-model='brewCtrl.brew.notes' md-maxlength='350'
+                                  rows='3' md-select-on-focus></textarea>
+
+                        <div ng-messages='brewForm.brewNotes.$error'>
+                            <div ng-message='md-maxlength'>
+                                Text is too long.
+                            </div>
+                        </div>
+                    </md-input-container>
+
+
+                    <p layout='row'>
+                        <md-icon class='md-48'>access_time</md-icon>
+                        <md-card-content>
+                            {{brewCtrl.brew.creationDate | date: 'dd-MMM-yyyy'}}
+                        </md-card-content>
+                    </p>
+                </span>
+
+                <span layout='row' layout-align='center center'>
+                    <md-button ng-show='brewCtrl.editMode' type='submit' aria-label='Edit brew'
+                               class='md-icon-button'
+                               ng-click='brewCtrl.updateBrew(brewForm)' ng-disabled='brewForm.$invalid'>
+                        <md-icon class='md-48'>done</md-icon>
+                    </md-button>
+
+                    <md-button ng-show='brewCtrl.editMode' aria-label='Cancel edition' class='md-icon-button'
+                               ng-click='brewCtrl.toggleEditMode()'>
+                        <md-icon class='md-48'>clear</md-icon>
+                    </md-button>
+                </span>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>

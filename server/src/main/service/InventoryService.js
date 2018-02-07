@@ -1,15 +1,40 @@
 'use strict';
 
 (function () {
+    var mongoose = require('mongoose');
     var UserService = require('./UserService');
     var _ = require('../util/util');
-
-    var Inventory = require('../model/Inventory');
+    var Inventory = mongoose.model('Inventory', require('../model/Inventory'));
+    var Ingredient = mongoose.model('Ingredient', require('../model/Ingredient'));
 
     /**
      * Service that handles all the logic and complex operations that involves the inventory.
      */
     var InventoryService = {};
+
+    /**
+     * Check if inventory has an ingredient. This method will automatically
+     * convert units to a base unit to make the comparison.
+     *
+     * @param {Object} ingredient Ingredient to be checked.
+     * @param {Object} inventory Inventory with all the ingredients.
+     * @returns {Boolean} True if the inventory has the ingredient. False otherwise.
+     */
+    InventoryService.hasIngredient = function (ingredient, inventory) {
+        var hasIngredient = false;
+
+        _.each(inventory.ingredients, function (invIngredient) {
+            ingredient = new Ingredient(ingredient);
+            invIngredient = new Ingredient(invIngredient);
+
+            if (invIngredient.name === ingredient.name &&
+                invIngredient.getNormalQuantity() >= ingredient.getNormalQuantity()) {
+                hasIngredient = true;
+                return;
+            }
+        });
+        return hasIngredient;
+    };
 
     /**
      * Get the inventory of the user requesting it.

@@ -1,5 +1,5 @@
 <!-- Visualizing recipe -->
-<md-content ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode' layout='column' layout-align='center center'
+<md-content ng-cloak ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode' layout='column' layout-align='center center'
             layout-padding class='fade-element'>
     <md-card class='created-recipe-card'>
         <md-card-title>
@@ -20,36 +20,72 @@
             </md-card-title-text>
         </md-card-title>
 
-        <md-card-content layout='column' layout-align='center start'>
-            <p layout='row'>
-                <md-icon class='md-48'>description</md-icon>
-                <md-card-content>
-                    {{recipeCtrl.recipe.directions}}
-                </md-card-content>
-            </p>
+        <md-card-content layout='column'>
+            <span layout='column' layout-align='center start'>
+                <p layout='row'>
+                    <md-icon class='md-48'>description</md-icon>
+                    <md-card-content>
+                        {{recipeCtrl.recipe.directions}}
+                    </md-card-content>
+                </p>
 
-            <p layout='row'>
-                <md-icon class='md-48'>shopping_basket</md-icon>
-                <md-card-content>
-                    <span ng-repeat='ingredient in recipeCtrl.recipe.ingredients'>
-                        {{ingredient.toString()}}
-                        <br>
-                    </span>
-                </md-card-content>
-            </p>
+                <p layout='row'>
+                    <md-icon class='md-48'>shopping_basket</md-icon>
+                    <md-card-content>
+                        <span ng-repeat='ingredient in recipeCtrl.recipe.ingredients'>
+                            {{ingredient.toString()}}
+                            <br>
+                        </span>
+                    </md-card-content>
+                </p>
 
-            <p layout='row'>
-                <md-icon class='md-48'>opacity</md-icon>
-                <md-card-content>
-                    {{recipeCtrl.recipe.equipment.volume}} {{recipeCtrl.recipe.equipment.unit}}
-                </md-card-content>
-            </p>
+                <p layout='row'>
+                    <md-icon class='md-48'>opacity</md-icon>
+                    <md-card-content>
+                        {{recipeCtrl.recipe.equipment.volume}} {{recipeCtrl.recipe.equipment.unit}}
+                    </md-card-content>
+                </p>
+            </span>
+
+            <span layout='column' layout-align='center center'>
+                <md-button ng-if="recipeCtrl.canBrew(recipeCtrl.recipe)" class="md-raised md-primary"
+                           layout-align='center center' ng-click='recipeCtrl.brew(recipeCtrl.recipe)'>
+                    Brew!
+                </md-button>
+            </span>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+<md-content ng-cloak ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode && !recipeCtrl.canBrew(recipeCtrl.recipe)'
+            layout='column' layout-align='center center'
+            layout-padding class='fade-element'>
+    <md-card class='missing-ingredients-card'>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='center center' layout-padding>
+                <span class='md-headline'>Missing Ingredients</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content layout='column'>
+            <span layout='column' layout-align='center start'>
+                <p layout='row'>
+                    <md-icon class='md-48'>shopping_basket</md-icon>
+                    <md-card-content>
+                        <span ng-repeat='ingredient in recipeCtrl.missingIngredients'>
+                            {{ingredient.toString()}}
+                            <br>
+                        </span>
+                    </md-card-content>
+                </p>
+            </span>
         </md-card-content>
     </md-card>
 </md-content>
 
 <!-- Creating recipe -->
-<div ng-show='!recipeCtrl.recipeId || recipeCtrl.editMode' layout='column' layout-align='center center' layout-padding
+<div ng-cloak ng-show='!recipeCtrl.recipeId || recipeCtrl.editMode' layout='column' layout-align='center center'
+     layout-padding
      class='fade-element'>
     <md-card>
         <md-card-title>
@@ -79,7 +115,7 @@
 
         <md-card-content class='md-inline-form' layout='column'>
             <form name='recipeForm' layout='column'>
-                <md-input-container class='md-icon-float md-clock'>
+                <md-input-container class='md-icon-float md-block'>
                     <label>Recipe Name</label>
                     <md-icon class='md-48'>local_drink</md-icon>
                     <input required name='recipeName' ng-model='recipeCtrl.recipe.name'>

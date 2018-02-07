@@ -19,6 +19,7 @@
             'recipeModule',
             'ingredientModule',
             'inventoryModule',
+            'brewModule',
             'loginModule',
             'authModule',
             'userModule',
@@ -73,6 +74,16 @@
                     url: '/inventory',
                     templateUrl: '/view/inventory.html',
                     controller: 'InventoryController as inventoryCtrl'
+                })
+                .state('app.brews', {
+                    url: '/brews',
+                    templateUrl: '/view/brews.html',
+                    controller: 'BrewsController as brewsCtrl'
+                })
+                .state('app.brewId', {
+                    url: '/brew/:brewId',
+                    templateUrl: '/view/brew.html',
+                    controller: 'BrewController as brewCtrl'
                 });
 
             $locationProvider.html5Mode(true);

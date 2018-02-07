@@ -15,7 +15,7 @@
         }
     });
 
-    module.exports = mongoose.model('Inventory', InventorySchema);
+    module.exports = InventorySchema;
 })();
 
 
