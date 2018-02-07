@@ -24,11 +24,14 @@
             self.quantityUnits = InventoryService.quantityUnits;
             self.readableQuantityUnits = _.keys(self.quantityUnits);
 
+            self.oldVolume = undefined;
+
             /**
              * Enter or exit the edit mode of a recipe.
              */
             self.toggleEditMode = function () {
                 self.editMode = !self.editMode;
+                self.oldVolume = undefined;
 
                 if (self.editMode) {
                     self.oldRecipe = angular.copy(self.recipe);
@@ -52,6 +55,41 @@
                 if (self.recipe.ingredients.length > 1) {
                     self.recipe.ingredients.pop();
                 }
+            };
+
+            /**
+             *  Update ingredients proportions according to the new equipment volume
+             */
+            self.ingredientQuantityUpdate = function () {
+                if (_.isUndefined(self.oldVolume)) {
+                    self.oldVolume = self.oldRecipe.equipment.volume;
+                }
+
+                var newVolume = self.recipe.equipment.volume;
+                var volumePercentVariation =  newVolume / self.oldVolume;
+
+                for (var i = 0; i < self.recipe.ingredients.length; i++) {
+                    var newIngredientQuantity = (self.recipe.ingredients[i].quantity * volumePercentVariation).toPrecision(4);
+                    self.recipe.ingredients[i].quantity = parseFloat(newIngredientQuantity);
+                };
+
+                self.oldVolume = newVolume;
+            };
+
+            /**
+             *  Converts equipment volume according to the volumeUnits
+             */
+            self.volumeUnitUpdate = function () {
+                if (!_.isUndefined(self.oldRecipe)) {
+                    if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
+                        var newEquipmentVolume =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
+                        self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
+                    } else {
+                        var newEquipmentVolume =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
+                        self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
+                    }
+                }
+
             };
 
             /**

@@ -17,6 +17,7 @@
                 </span>
 
                 <span class='md-headline'>{{recipeCtrl.recipe.name}}</span>
+
             </md-card-title-text>
         </md-card-title>
 
@@ -145,7 +146,7 @@
 
                     <md-input-container class='md-icon-float md-block'>
                         <label>Unit</label>
-                        <md-select required name='volumeUnit' ng-model='recipeCtrl.recipe.equipment.unit'>
+                        <md-select required name='volumeUnit' ng-model='recipeCtrl.recipe.equipment.unit' ng-change='recipeCtrl.volumeUnitUpdate()'>
                             <md-option ng-repeat='unit in recipeCtrl.readableVolumeUnits'
                                        value='{{recipeCtrl.volumeUnits[unit]}}'>
                                 {{unit}}
@@ -155,6 +156,14 @@
                         <div ng-messages='recipeForm.volumeUnit.$error'>
                             <div ng-message='required'>This is required.</div>
                         </div>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <md-button class="md-icon-button test-tooltip" aria-label="Refresh"
+                                   ng-click='recipeCtrl.ingredientQuantityUpdate()' ng-show='recipeCtrl.editMode'>
+                            <md-tooltip md-direction="top">Atualizar Proporções</md-tooltip>
+                            <md-icon class='md-48'>refresh</md-icon>
+                        </md-button>
                     </md-input-container>
                 </div>
 
@@ -218,11 +227,13 @@
                 <span layout='row' layout-align='center center'>
                     <md-button type='submit' aria-label='Save recipe' class='md-icon-button'
                                ng-click='recipeCtrl.saveRecipe(recipeForm)' ng-disabled='recipeForm.$invalid'>
+                        <md-tooltip>Salvar</md-tooltip>
                         <md-icon class='md-48'>done</md-icon>
                     </md-button>
 
                     <md-button ng-show='recipeCtrl.editMode' aria-label='Cancel edition' class='md-icon-button'
                                ng-click='recipeCtrl.toggleEditMode()'>
+                        <md-tooltip>Cancelar</md-tooltip>
                         <md-icon class='md-48'>clear</md-icon>
                     </md-button>
                 </span>
