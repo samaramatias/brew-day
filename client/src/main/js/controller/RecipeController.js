@@ -188,6 +188,10 @@
                         }
                     });
                 });
+
+                _.remove(self.missingIngredients, function (missingIngredient) {
+                    return missingIngredient.quantity <= 0;
+                });
             };
 
             /**
