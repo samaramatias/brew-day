@@ -104,3 +104,11 @@ md-toast.md-warning-toast-theme .md-toast-content {
     width: 50%;
     background-color: rgba(204, 0, 0, 0.2);
 }
+
+.md-headline{
+    word-wrap:break-word;
+}
+
+.tooltip-multiline {
+    height: auto;
+}

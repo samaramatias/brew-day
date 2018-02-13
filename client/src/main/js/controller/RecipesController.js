@@ -6,8 +6,8 @@
     /**
      * Controller of the recipes page.
      */
-    recipeModule.controller('RecipesController', ['$q', 'RecipeService', 'ToastService', 'Inventory', 'InventoryService',
-        function ($q, RecipeService, ToastService, Inventory, InventoryService) {
+    recipeModule.controller('RecipesController', ['$q', '$state', 'RecipeService', 'ToastService', 'Inventory', 'InventoryService', 'Brew', 'BrewService', 'ModalService',
+        function ($q, $state, RecipeService, ToastService, Inventory, InventoryService, Brew, BrewService, ModalService) {
             var self = this;
 
             self.recipes = [];
@@ -24,6 +24,31 @@
              */
             self.canBrew = function (recipe) {
                 return RecipeService.canBrew(recipe, self.inventory);
+            };
+
+            /**
+             * Brew a recipe.
+             *
+             * @param {Object} recipe Recipe to be brewed.
+             */
+            self.brew = function (recipe) {
+                var modalPromise = ModalService.prompt('Brew Notes', 'Any notes for this brew?', 'Notes...');
+
+                modalPromise
+                    .then(function (notes) {
+                        var brew = new Brew();
+                        brew.recipe = recipe;
+                        brew.notes = notes;
+
+                        BrewService.createBrew(brew)
+                            .then(function () {
+                                ToastService.successToast('Recipe brewed!');
+                                $state.go('app.recipes');
+                            })
+                            .catch(function () {
+                                ToastService.errorToast('Error brewing recipe.');
+                            });
+                    });
             };
 
             /**
