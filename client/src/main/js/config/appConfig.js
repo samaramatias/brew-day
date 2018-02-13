@@ -88,7 +88,7 @@
                 .state('app.should-brew', {
                     url: '/should-brew',
                     templateUrl: '/view/should-brew.html',
-                    controller: 'RecipesController as recipesCtrl'
+                    controller: 'ShouldBrewController as shouldBCtrl'
                 });
 
             $locationProvider.html5Mode(true);
