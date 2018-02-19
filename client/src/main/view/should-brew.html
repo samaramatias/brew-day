@@ -1,67 +1,54 @@
-<md-content layout-sm='column' layout-gt-sm='row' layout-align-gt-sm='center start' layout-padding layout-wrap>
-    <!-- Show the perfect brew -->
-    <md-card ng-show='shouldBCtrl.whatShouldIBrew' ng-model='shouldBCtrl.whatShouldIBrew' flex-sm flex-gt-sm='60'>
-        <md-tooltip md-direction='right' class="tooltip-multiline green-tooltip">
-            Based on the ingredients available in your inventory,
-            <br>
-            this is the perfect brew that you should do today.
-        </md-tooltip>
-
+<!-- Show the perfect brew -->
+<md-content ng-cloak ng-show='shouldBCtrl.whatShouldIBrew' layout='column' layout-align='center center'
+            layout-padding class='fade-element'>
+    <md-card class='created-recipe-card'>
         <md-card-title>
-            <md-card-title-text layout='column' layout-align='start center'>
+            <md-card-title-text layout='column' layout-align='center center' layout-padding>
                 <span class='md-headline'>{{shouldBCtrl.whatShouldIBrew.name}}</span>
             </md-card-title-text>
         </md-card-title>
-        <md-card-content layout='column' layout-align='center start'>
-            <br>
-            <p layout='row' >
-                <md-icon class='md-48'>shopping_basket</md-icon>
-                <md-card-content>
-                    <span class='md-title'>Ingredients</span>
-                </md-card-content>
-            </p>
-            <p layout='row' >
-                <md-card-content>
-               <span ng-repeat='ingredient in shouldBCtrl.whatShouldIBrew.ingredients'>
-               {{ingredient.toString()}}
-               <br>
-               </span>
-                </md-card-content>
-            </p>
-            <p layout='row' >
-                <md-icon class='md-48'>description</md-icon>
-                <md-card-content>
-                    <span class='md-title'>How to make</span>
-                </md-card-content>
-            </p>
-            <p layout='row'>
-                <md-card-content>
-                    {{shouldBCtrl.whatShouldIBrew.directions}}
-                </md-card-content>
-            </p>
-            <p layout='row' >
-                <md-icon class='md-48'>opacity</md-icon>
-                <md-card-content>
-                    <span class='md-title'>Equipment Volume</span>
-                </md-card-content>
-            </p>
-            <p layout='row'>
-                <md-card-content>
-                    {{shouldBCtrl.whatShouldIBrew.equipment.volume}} {{shouldBCtrl.whatShouldIBrew.equipment.unit}}
-                </md-card-content>
-            </p>
-        </md-card-content>
-        <span layout='column' layout-align='center center'>
-         <md-button class="md-raised md-primary" layout-align='center center'
+
+        <md-card-content layout='column'>
+            <span layout='column' layout-align='center start'>
+                <p layout='row'>
+                    <md-icon class='md-48'>description</md-icon>
+                    <md-card-content>
+                        {{shouldBCtrl.whatShouldIBrew.directions}}
+                    </md-card-content>
+                </p>
+
+                <p layout='row'>
+                    <md-icon class='md-48'>shopping_basket</md-icon>
+                    <md-card-content>
+                        <span ng-repeat='ingredient in shouldBCtrl.whatShouldIBrew.ingredients'>
+                            {{ingredient.toString()}}
+                            <br>
+                        </span>
+                    </md-card-content>
+                </p>
+
+                <p layout='row'>
+                    <md-icon class='md-48'>opacity</md-icon>
+                    <md-card-content>
+                        {{shouldBCtrl.whatShouldIBrew.equipment.volume}} {{shouldBCtrl.whatShouldIBrew.equipment.unit}}
+                    </md-card-content>
+                </p>
+            </span>
+
+            <span layout='column' layout-align='center center'>
+                <md-button class="md-raised md-primary" layout-align='center center'
                     ng-click='shouldBCtrl.brew(shouldBCtrl.whatShouldIBrew)'>
-            Brew!
-         </md-button>
-
-
-      </span>
+                    Brew!
+                </md-button>
+            </span>
+        </md-card-content>
     </md-card>
-    <!-- No brew available -->
-    <md-card class='missing-ingredients-card' ng-show='!shouldBCtrl.whatShouldIBrew' ng-model='shouldBCtrl.whatShouldIBrew' flex-sm flex-gt-sm='60'>
+</md-content>
+
+<!-- No brew available -->
+<md-content ng-cloak ng-show='!shouldBCtrl.whatShouldIBrew' ng-model='shouldBCtrl.whatShouldIBrew' layout='column' layout-align='center center'
+            layout-padding class='fade-element'>
+    <md-card layout='column' class='missing-ingredients-card'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='start center'>
                 <span class='md-body-2'>There is no brew available for you.</span>
