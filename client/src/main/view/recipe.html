@@ -1,17 +1,15 @@
 <!-- Visualizing recipe -->
-<md-content ng-cloak ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode' layout='column' layout-align='center center'
-            layout-padding class='fade-element'>
+<md-content ng-cloak ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode' layout='column' layout-align='center center' layout-padding
+    class='fade-element'>
     <md-card class='created-recipe-card'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='center center' layout-padding>
                 <span class='md-headline' layout='row' layout-align='center center'>
-                    <md-button class='md-icon-button'
-                               ng-click='recipeCtrl.toggleEditMode()'>
+                    <md-button class='md-icon-button' ng-click='recipeCtrl.toggleEditMode()'>
                         <md-icon class='md-48'>mode_edit</md-icon>
                     </md-button>
 
-                    <md-button class='md-icon-button'
-                               ng-click='recipeCtrl.deleteRecipe()'>
+                    <md-button class='md-icon-button' ng-click='recipeCtrl.deleteRecipe()'>
                         <md-icon class='md-48'>delete</md-icon>
                     </md-button>
                 </span>
@@ -49,8 +47,7 @@
             </span>
 
             <span layout='column' layout-align='center center'>
-                <md-button ng-if="recipeCtrl.canBrew(recipeCtrl.recipe)" class="md-raised md-primary"
-                           layout-align='center center' ng-click='recipeCtrl.brew(recipeCtrl.recipe)'>
+                <md-button ng-if="recipeCtrl.canBrew(recipeCtrl.recipe)" class="md-raised md-primary" layout-align='center center' ng-click='recipeCtrl.brew(recipeCtrl.recipe)'>
                     Brew!
                 </md-button>
             </span>
@@ -58,9 +55,8 @@
     </md-card>
 </md-content>
 
-<md-content ng-cloak ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode && !recipeCtrl.canBrew(recipeCtrl.recipe)'
-            layout='column' layout-align='center center'
-            layout-padding class='fade-element'>
+<md-content ng-cloak ng-show='recipeCtrl.recipeId && !recipeCtrl.editMode && !recipeCtrl.canBrew(recipeCtrl.recipe)' layout='column'
+    layout-align='center center' layout-padding class='fade-element'>
     <md-card class='missing-ingredients-card'>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='center center' layout-padding>
@@ -85,27 +81,21 @@
 </md-content>
 
 <!-- Creating recipe -->
-<div ng-cloak ng-show='!recipeCtrl.recipeId || recipeCtrl.editMode' layout='column' layout-align='center center'
-     layout-padding
-     class='fade-element'>
+<div ng-cloak ng-show='!recipeCtrl.recipeId || recipeCtrl.editMode' layout='column' layout-align='center center' layout-padding
+    class='fade-element'>
     <md-card>
         <md-card-title>
             <md-card-title-text layout='column' layout-align='center center' layout-padding>
                 <span class='md-headline' layout='row' layout-align='center center'>
-                    <md-button hide-xs aria-label='Add ingredient'
-                               class='md-primary md-hue-1'
-                               ng-click='recipeCtrl.addIngredient()'>Add Ingredient</md-button>
+                    <md-button hide-xs aria-label='Add ingredient' class='md-primary md-hue-1' ng-click='recipeCtrl.addIngredient()'>Add Ingredient</md-button>
 
-                    <md-button hide-gt-xs aria-label='Add ingredient' class='md-icon-button'
-                               ng-click='recipeCtrl.addIngredient()'>
+                    <md-button hide-gt-xs aria-label='Add ingredient' class='md-icon-button' ng-click='recipeCtrl.addIngredient()'>
                         <md-icon class='md-48'>add</md-icon>
                     </md-button>
 
-                    <md-button hide-xs aria-label='Remove ingredient' class='md-primary md-hue-1'
-                               ng-click='recipeCtrl.removeIngredient()'>Remove Ingredient</md-button>
+                    <md-button hide-xs aria-label='Remove ingredient' class='md-primary md-hue-1' ng-click='recipeCtrl.removeIngredient()'>Remove Ingredient</md-button>
 
-                    <md-button hide-gt-xs aria-label='Remove ingredient' class='md-icon-button'
-                               ng-click='recipeCtrl.removeIngredient()'>
+                    <md-button hide-gt-xs aria-label='Remove ingredient' class='md-icon-button' ng-click='recipeCtrl.removeIngredient()'>
                         <md-icon class='md-48'>remove</md-icon>
                     </md-button>
                 </span>
@@ -130,8 +120,7 @@
                     <md-input-container class='md-icon-float md-block'>
                         <label>Equipment Volume</label>
                         <md-icon class='md-48'>opacity</md-icon>
-                        <input required type='number' step='any' name='equipmentVolume'
-                               ng-model='recipeCtrl.recipe.equipment.volume' min='0'/>
+                        <input required type='number' step='any' name='equipmentVolume' ng-model='recipeCtrl.recipe.equipment.volume' min='0' />
 
                         <div ng-messages='recipeForm.equipmentVolume.$error' multiple>
                             <div ng-message='required'>
@@ -147,8 +136,7 @@
                     <md-input-container class='md-icon-float md-block'>
                         <label>Unit</label>
                         <md-select required name='volumeUnit' ng-model='recipeCtrl.recipe.equipment.unit' ng-change='recipeCtrl.volumeUnitUpdate()'>
-                            <md-option ng-repeat='unit in recipeCtrl.readableVolumeUnits'
-                                       value='{{recipeCtrl.volumeUnits[unit]}}'>
+                            <md-option ng-repeat='unit in recipeCtrl.readableVolumeUnits' value='{{recipeCtrl.volumeUnits[unit]}}'>
                                 {{unit}}
                             </md-option>
                         </md-select>
@@ -159,8 +147,7 @@
                     </md-input-container>
 
                     <md-input-container>
-                        <md-button class="md-icon-button test-tooltip" aria-label="Refresh"
-                                   ng-click='recipeCtrl.ingredientQuantityUpdate()' ng-show='recipeCtrl.editMode'>
+                        <md-button class="md-icon-button test-tooltip" aria-label="Refresh" ng-click='recipeCtrl.ingredientQuantityUpdate()' ng-show='recipeCtrl.editMode'>
                             <md-tooltip md-direction="top">Atualizar Proporções</md-tooltip>
                             <md-icon class='md-48'>refresh</md-icon>
                         </md-button>
@@ -169,20 +156,24 @@
 
                 <div layout='column' layout-align='center center'>
                     <div layout='row' ng-repeat='newIngredient in recipeCtrl.recipe.ingredients' layout-fill>
-                        <md-input-container class='md-icon-float md-block'>
-                            <label>Ingredient Name</label>
-                            <md-icon class='md-48'>shopping_basket</md-icon>
-                            <input required name='ingredientName' ng-model='newIngredient.name'>
+                        <md-autocomplete required md-input-name="ingredientName" md-input-minlength="2" md-input-maxlength="50" md-selected-item="newIngredient.name"
+                            md-search-text="recipeCtrl.searchText" md-items="ingName in recipeCtrl.queryIngredientName(recipeCtrl.searchText)"
+                            md-item-text="ingName" md-require-match md-floating-label="Ingredient Name" append-icon='shopping_basket'>
+                            <md-item-template>
+                                <span md-highlight-text="recipeCtrl.searchText">{{ingName}}</span>
+                            </md-item-template>
 
-                            <div ng-messages='recipeForm.ingredientName.$error'>
-                                <div ng-message='required'>This is required.</div>
+                            <div ng-messages="recipeForm.ingredientName.$error" ng-if="recipeForm.ingredientName.$touched">
+                                <div ng-message="required">This is required.</div>
+                                <div ng-message="md-require-match">Please select an existing ingredient.</div>
+                                <div ng-message="minlength">Your entry is not long enough.</div>
+                                <div ng-message="maxlength">Your entry is too long.</div>
                             </div>
-                        </md-input-container>
+                        </md-autocomplete>
 
                         <md-input-container class='md-block'>
                             <label>Ingredient Quantity</label>
-                            <input required type='number' step='any' name='ingredientQuantity'
-                                   ng-model='newIngredient.quantity' min='0'/>
+                            <input required type='number' step='any' name='ingredientQuantity' ng-model='newIngredient.quantity' min='0' />
 
                             <div ng-messages='recipeForm.ingredientQuantity.$error' multiple>
                                 <div ng-message='required'>
@@ -198,8 +189,7 @@
                         <md-input-container class='md-block'>
                             <label>Unit</label>
                             <md-select required name='ingredientUnit' ng-model='newIngredient.unit'>
-                                <md-option ng-repeat='unit in recipeCtrl.readableQuantityUnits'
-                                           value='{{recipeCtrl.quantityUnits[unit]}}'>
+                                <md-option ng-repeat='unit in recipeCtrl.readableQuantityUnits' value='{{recipeCtrl.quantityUnits[unit]}}'>
                                     {{unit}}
                                 </md-option>
                             </md-select>
@@ -214,8 +204,7 @@
                 <md-input-container class='md-icon-float md-block'>
                     <label>How to Make</label>
                     <md-icon class='md-48'>description</md-icon>
-                    <textarea name='recipeDirections' ng-model='recipeCtrl.recipe.directions' md-maxlength='500'
-                              rows='3' md-select-on-focus></textarea>
+                    <textarea name='recipeDirections' ng-model='recipeCtrl.recipe.directions' md-maxlength='500' rows='3' md-select-on-focus></textarea>
 
                     <div ng-messages='recipeForm.recipeDirections.$error'>
                         <div ng-message='md-maxlength'>
@@ -225,14 +214,12 @@
                 </md-input-container>
 
                 <span layout='row' layout-align='center center'>
-                    <md-button type='submit' aria-label='Save recipe' class='md-icon-button'
-                               ng-click='recipeCtrl.saveRecipe(recipeForm)' ng-disabled='recipeForm.$invalid'>
+                    <md-button type='submit' aria-label='Save recipe' class='md-icon-button' ng-click='recipeCtrl.saveRecipe(recipeForm)' ng-disabled='recipeForm.$invalid'>
                         <md-tooltip>Save</md-tooltip>
                         <md-icon class='md-48'>done</md-icon>
                     </md-button>
 
-                    <md-button ng-show='recipeCtrl.editMode' aria-label='Cancel edition' class='md-icon-button'
-                               ng-click='recipeCtrl.toggleEditMode()'>
+                    <md-button ng-show='recipeCtrl.editMode' aria-label='Cancel edition' class='md-icon-button' ng-click='recipeCtrl.toggleEditMode()'>
                         <md-tooltip>Cancel</md-tooltip>
                         <md-icon class='md-48'>clear</md-icon>
                     </md-button>
