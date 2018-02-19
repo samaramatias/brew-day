@@ -262,7 +262,7 @@
              * Search for an ingredient by name.
              * 
              * @param {String} query Query string.
-             * @returns {Array} Result of the query. 
+             * @returns {Array} Result of the query.
              */
             self.queryIngredientName = function (query) {
                 var results = query ? self.availableIngredientNames.filter(self._createFilterFor(query)) : self.availableIngredientNames;
@@ -273,7 +273,8 @@
              * Create a function filter for a search query.
              * 
              * @param {String} query Query string.
-             * @returns {Function} Query function for the filter. 
+             * @returns {Function} Query function for the filter.
+             * @private
              */
             self._createFilterFor = function (query) {
                 return function (ingredientName) {
