@@ -1,0 +1,59 @@
+<!-- Show the perfect brew -->
+<md-content ng-cloak ng-show='shouldBCtrl.whatShouldIBrew' layout='column' layout-align='center center'
+            layout-padding class='fade-element'>
+    <md-card class='created-recipe-card'>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='center center' layout-padding>
+                <span class='md-headline'>{{shouldBCtrl.whatShouldIBrew.name}}</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content layout='column'>
+            <span layout='column' layout-align='center start'>
+                <p layout='row'>
+                    <md-icon class='md-48'>description</md-icon>
+                    <md-card-content>
+                        {{shouldBCtrl.whatShouldIBrew.directions}}
+                    </md-card-content>
+                </p>
+
+                <p layout='row'>
+                    <md-icon class='md-48'>shopping_basket</md-icon>
+                    <md-card-content>
+                        <span ng-repeat='ingredient in shouldBCtrl.whatShouldIBrew.ingredients'>
+                            {{ingredient.toString()}}
+                            <br>
+                        </span>
+                    </md-card-content>
+                </p>
+
+                <p layout='row'>
+                    <md-icon class='md-48'>opacity</md-icon>
+                    <md-card-content>
+                        {{shouldBCtrl.whatShouldIBrew.equipment.volume}} {{shouldBCtrl.whatShouldIBrew.equipment.unit}}
+                    </md-card-content>
+                </p>
+            </span>
+
+            <span layout='column' layout-align='center center'>
+                <md-button class="md-raised md-primary" layout-align='center center'
+                    ng-click='shouldBCtrl.brew(shouldBCtrl.whatShouldIBrew)'>
+                    Brew!
+                </md-button>
+            </span>
+        </md-card-content>
+    </md-card>
+</md-content>
+
+<!-- No brew available -->
+<md-content ng-cloak ng-show='!shouldBCtrl.whatShouldIBrew' ng-model='shouldBCtrl.whatShouldIBrew' layout='column' layout-align='center center'
+            layout-padding class='fade-element'>
+    <md-card layout='column' class='missing-ingredients-card'>
+        <md-card-title>
+            <md-card-title-text layout='column' layout-align='start center'>
+                <span class='md-body-2'>There is no brew available for you.</span>
+                <p class='md-body-1'>Make sure that you have enough ingredients in your inventory to make some.</p>
+            </md-card-title-text>
+        </md-card-title>
+    </md-card>
+</md-content>

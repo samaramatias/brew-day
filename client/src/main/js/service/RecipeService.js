@@ -18,6 +18,23 @@
             };
 
             /**
+             * Calculates the cost of the ingredients of a recipe.
+             * The calculation is made from the amount of ingredients used for a brew.
+             *
+             * @param recipe Recipe.
+             * @returns {number} that represents the recipe cost.
+             */
+            self.recipeCost = function(recipe) {
+                var cost = 0;
+
+                _.each(recipe.ingredients, function (ingredient) {
+                    cost = cost + ingredient.getNormalQuantity();
+                });
+
+                return cost;
+            };
+
+            /**
              * Check if the user can brew a recipe.
              *
              * @param {Object} recipe Recipe to be checked.
