@@ -156,9 +156,9 @@
 
                 <div layout='column' layout-align='center center'>
                     <div layout='row' ng-repeat='newIngredient in recipeCtrl.recipe.ingredients' layout-fill>
-                        <md-autocomplete required md-input-name="ingredientName" md-input-minlength="2" md-input-maxlength="50" md-selected-item="newIngredient.name"
-                            md-search-text="newIngredient.searchText" md-items="ingName in recipeCtrl.queryIngredientName(newIngredient.searchText)"
-                            md-item-text="ingName" md-require-match md-floating-label="Ingredient Name" append-icon='shopping_basket'>
+                        <md-autocomplete required md-input-name="ingredientName" md-input-maxlength="50" md-selected-item="newIngredient.name" md-search-text="newIngredient.searchText"
+                            md-items="ingName in recipeCtrl.queryIngredientName(newIngredient.searchText)" md-item-text="ingName"
+                            md-require-match md-floating-label="Ingredient Name" append-icon='shopping_basket'>
                             <md-item-template>
                                 <span md-highlight-text="newIngredient.searchText">{{ingName}}</span>
                             </md-item-template>
@@ -166,7 +166,6 @@
                             <div ng-messages="recipeForm.ingredientName.$error" ng-if="recipeForm.ingredientName.$touched">
                                 <div ng-message="required">This is required.</div>
                                 <div ng-message="md-require-match">Please select an existing ingredient.</div>
-                                <div ng-message="minlength">Your entry is not long enough.</div>
                                 <div ng-message="maxlength">Your entry is too long.</div>
                             </div>
                         </md-autocomplete>
