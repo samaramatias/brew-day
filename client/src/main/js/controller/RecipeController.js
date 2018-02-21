@@ -25,6 +25,8 @@
             self.readableQuantityUnits = _.keys(self.quantityUnits);
 
             self.oldVolume = undefined;
+            self.searchText = undefined;
+            self.availableIngredientNames = [];
 
             /**
              * Enter or exit the edit mode of a recipe.
@@ -66,7 +68,7 @@
                 }
 
                 var newVolume = self.recipe.equipment.volume;
-                var volumePercentVariation =  newVolume / self.oldVolume;
+                var volumePercentVariation = newVolume / self.oldVolume;
 
                 for (var i = 0; i < self.recipe.ingredients.length; i++) {
                     var newIngredientQuantity = (self.recipe.ingredients[i].quantity * volumePercentVariation).toPrecision(4);
@@ -81,11 +83,11 @@
              */
             self.volumeUnitUpdate = function () {
                 if (!_.isUndefined(self.oldRecipe)) {
-                    if(self.recipe.equipment.unit === self.volumeUnits.Gallons){
-                        var newEquipmentVolume =  (self.recipe.equipment.volume * 0.264172).toPrecision(4);
+                    if (self.recipe.equipment.unit === self.volumeUnits.Gallons) {
+                        var newEquipmentVolume = (self.recipe.equipment.volume * 0.264172).toPrecision(4);
                         self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
                     } else {
-                        var newEquipmentVolume =  (self.recipe.equipment.volume * 3.78541).toPrecision(4);
+                        var newEquipmentVolume = (self.recipe.equipment.volume * 3.78541).toPrecision(4);
                         self.recipe.equipment.volume = parseFloat(newEquipmentVolume);
                     }
                 }
@@ -256,18 +258,45 @@
                     });
             };
 
+            /**
+             * Search for an ingredient by name.
+             * 
+             * @param {String} query Query string.
+             * @returns {Array} Result of the query.
+             */
+            self.queryIngredientName = function (query) {
+                var results = query ? self.availableIngredientNames.filter(self._createFilterFor(query)) : self.availableIngredientNames;
+                return results;
+            };
+
+            /**
+             * Create a function filter for a search query.
+             * 
+             * @param {String} query Query string.
+             * @returns {Function} Query function for the filter.
+             * @private
+             */
+            self._createFilterFor = function (query) {
+                return function (ingredientName) {
+                    return _.includes(angular.lowercase(ingredientName), angular.lowercase(query));
+                };
+            };
+
             (function () {
                 var promises = [];
                 promises.push(self.loadInventory());
 
                 if (self.recipeId) {
                     promises.push(self.loadRecipe(self.recipeId));
-
-                    $q.all(promises)
-                        .then(function () {
-                            self.getMissingIngredients(self.recipe);
-                        });
                 }
+
+                $q.all(promises)
+                    .then(function () {
+                        self.availableIngredientNames = _.map(self.inventory.ingredients, function (ingredient) {
+                            return ingredient.name;
+                        });
+                        self.getMissingIngredients(self.recipe);
+                    });
             })();
         }
     ]);

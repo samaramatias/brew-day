@@ -16,6 +16,7 @@
             'angular-jwt',
             'angular-loading-bar',
             'appModule',
+            'appendIconModule',
             'recipeModule',
             'ingredientModule',
             'inventoryModule',
