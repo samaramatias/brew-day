@@ -9,6 +9,7 @@
     var cors = require('cors');
     var errorHandler = require('errorhandler');
     var mongoose = require('mongoose');
+    let config = require('config');
 
     var routesMiddleware = require('./server/src/main/middleware/routesMiddleware');
 
@@ -41,6 +42,13 @@
 
     app.use(cors());
     app.use(morgan('combined'));
+
+    //don't show the log when it is test
+    if(config.util.getEnv('NODE_ENV') !== 'test') {
+    //use morgan to log at command line
+    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+    }
+
     app.use(bodyParser.json({limit: '30mb'}));
     app.use(bodyParser.urlencoded({extended: true}));
 
@@ -60,4 +68,6 @@
     app.listener = app.listen(server_port, function () {
         console.log('Server listening on port ' + app.listener.address().port + '.');
     });
+
+    module.exports = app; // for testing
 })();
