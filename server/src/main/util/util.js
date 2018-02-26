@@ -3,6 +3,8 @@
 (function () {
     var _ = require('lodash');
 
+    var jwt = require('express-jwt');
+
     _.BAD_REQUEST = 400;
     _.NOT_FOUND = 404;
     _.FORBIDDEN = 403;
@@ -45,6 +47,14 @@
     _.getToken = function (req) {
         return req.header('access_token') || _.getAuthorizationToken(req)
     };
+
+    _.authCheck = function() {
+        // TODO singleton para nao instanciar toda vez
+        return jwt({
+            secret: _.AUTH0.CLIENT_SECRET,
+            audience: _.AUTH0.CLIENT_ID
+        });
+    } 
 
     /**
      * Get the Authorization token from the request headers.

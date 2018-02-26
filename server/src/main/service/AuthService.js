@@ -79,8 +79,10 @@
      * Initialize Auth0 clients.
      */
     (function () {
-        _auth0AuthenticationInit();
-        _auth0ManagementInit();
+        if (process.env.PROFILE !== 'test') {
+            _auth0AuthenticationInit();
+            _auth0ManagementInit();
+        }
     })();
 
     module.exports = AuthService;

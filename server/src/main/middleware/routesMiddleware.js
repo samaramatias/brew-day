@@ -1,17 +1,11 @@
 'use strict';
 
 (function () {
-    var jwt = require('express-jwt');
     var _ = require('../util/util');
 
     var recipeRouter = require('../router/recipeRouter');
     var inventoryRouter = require('../router/inventoryRouter');
     var brewRouter = require('../router/brewRouter');
-
-    var authCheck = jwt({
-        secret: _.AUTH0.CLIENT_SECRET,
-        audience: _.AUTH0.CLIENT_ID
-    });
 
     var routesMiddleware = {};
 
@@ -33,9 +27,9 @@
             res.sendFile(clientFilesPath + '/index.html');
         });
 
-        app.use('/api/recipe', authCheck, recipeRouter);
-        app.use('/api/inventory', authCheck, inventoryRouter);
-        app.use('/api/brew', authCheck, brewRouter);
+        app.use('/api/recipe', _.authCheck(), recipeRouter);
+        app.use('/api/inventory', _.authCheck(), inventoryRouter);
+        app.use('/api/brew', _.authCheck(), brewRouter);
     };
 
     module.exports = routesMiddleware;
