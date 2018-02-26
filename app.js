@@ -9,7 +9,6 @@
     var cors = require('cors');
     var errorHandler = require('errorhandler');
     var mongoose = require('mongoose');
-    let config = require('config');
 
     var routesMiddleware = require('./server/src/main/middleware/routesMiddleware');
 
@@ -24,14 +23,25 @@
 
     var dbConn;
 
-    if (is_production) {
-        dbConn = mongoose.connect(process.env.MONGODB_ADDRESS + '/BREWDAY', {useMongoClient: true});
-    } else {
-        dbConn = mongoose.connect('mongodb://127.0.0.1:27017/BREWDAY-TESTDB', {useMongoClient: true});
-        mongoose.set('debug', true);
+    function getConfig() {
+        var PROFILE = process.env.PROFILE;
 
-        app.use(errorHandler());
+        if (!(PROFILE === 'prod' || PROFILE === 'dev' || PROFILE === 'test')) {
+            console.error('Deveria passar o PROFILE: prod | dev | test');
+            process.exit(1);
+        }
+        return require('./config/' + PROFILE + '.json');
     }
+
+    if (process.env.PROFILE !== 'prod') {
+        mongoose.set('debug', true);
+    }
+
+    var config = getConfig();
+
+    dbConn = mongoose.connect(config.DBHost, {useMongoClient: true});
+        
+    app.use(errorHandler());
 
     dbConn.once('error', function (e) {
         console.error(e);
@@ -44,10 +54,10 @@
     app.use(morgan('combined'));
 
     //don't show the log when it is test
-    if(config.util.getEnv('NODE_ENV') !== 'test') {
+    //if(config.util.getEnv('NODE_ENV') !== 'test') {
     //use morgan to log at command line
-    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
-    }
+    //app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+    //}
 
     app.use(bodyParser.json({limit: '30mb'}));
     app.use(bodyParser.urlencoded({extended: true}));

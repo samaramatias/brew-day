@@ -4,8 +4,7 @@
   "description": "Brew Day! is an application for home brewers.",
   "main": "app.js",
   "scripts": {
-    //"test": "npm test",
-    "start": "SET NODE_ENV=dev && node server.js",
+    "start": "PROFILE=dev node app.js",
     "test": "mocha --timeout 10000"
   },
   "engines": {
