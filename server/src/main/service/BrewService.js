@@ -44,7 +44,7 @@
                     userId: user.user_id,
                     _id: brewId
                 };
-
+                console.log("userrrrrr", user);
                 return Brew.findOne(params).lean().exec();
             });
     };
@@ -60,7 +60,7 @@
         return UserService.getUserByAccessToken(userToken)
             .then(function (user) {
                 brew.userId = user.user_id;
-
+                
                 return InventoryService.getInventory(userToken)
                     .then(function (inventory) {
                         var error = BrewService._validateCreate(brew, inventory);
