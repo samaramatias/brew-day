@@ -45,7 +45,6 @@
                     _id: brewId
                 };
                 // TODO remove the console.log
-                console.log("userrrrrr", user);
                 return Brew.findOne(params).lean().exec();
             });
     };

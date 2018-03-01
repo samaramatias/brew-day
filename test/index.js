@@ -9,7 +9,7 @@ var Inventory = require('../server/src/main/model/Inventory.js');
 
 // beforeall
 
-// TODO como limpar o banco
+// TODO clean the DB before running tests
 
 var _ = require('../server/src/main/util/util');
 var AuthService = require('../server/src/main/service/AuthService');
@@ -44,8 +44,19 @@ _.authCheck = function() {
 
 // END before
 
-
 var app = require('../app.js');
+
+test('Correct brew returned', function (assert) {
+    request(app)
+      .get('/api/brew')
+      .set('access_token', 'TOKEN test')
+      .expect('Content-Type', 'asd')
+      .end(function (err, res) {
+        assert.same(res.status, 200);
+        assert.same(res.body, []);
+        assert.end();
+      });
+}); 
 
 test('Create inventory correctly', function (assert) {
     request(app)
@@ -59,14 +70,62 @@ test('Create inventory correctly', function (assert) {
       });
 }); 
 
-test('Correct brew returned', function (assert) {
+test('Create inventory correctly and add ingredient', function (assert) {
     request(app)
-      .get('/api/brew')
+      .post('/api/inventory')
       .set('access_token', 'TOKEN test')
       .expect('Content-Type', 'asd')
       .end(function (err, res) {
-        assert.same(res.status, 200);
-        assert.same(res.body, []);
+        assert.same(res.status, 201);
+        assert.same(res.body.ingredients, []);
+      });
+
+    var inventoryPut = { 
+        _id: '5a94c61b990ffc47a5ffb04a',
+        ingredients: 
+        [ { name: 'water', quantity: 10, unit: 'L' } ],
+        userId: user.user_id,
+        __v: 4
+    };  
+
+    request(app)
+        .get('/api/inventory')
+        .set('access_token', 'TOKEN test')
+        .expect('Content-Type', 'asd')
+        .end(function(err, res){
+            request(app)
+            .put('/api/inventory/'+res.body._id)
+            .set('access_token', 'TOKEN test')
+            .send({ 
+                _id: inventoryPut._id,
+                ingredients: 
+                [ { name: 'water',quantity: 10, unit: 'L' } ],
+                userId: user.user_id,
+                __v: 4
+            })
+            .end(function(error, response){
+                assert.same(response.status, 200);
+                assert.same(response.json);
+                assert.same(response.body.ingredients.length, 1);
+                assert.end();
+      });
+    });
+}); 
+
+test('Correct recipe created', function (assert) {
+    request(app)
+      .post('/api/recipe')
+      .set('access_token', 'TOKEN test')
+      .expect('Content-Type', 'asd')
+      .send({ name: 'Test recipe',
+        directions: 'Try and try again',
+        ingredients: [ 
+            { name: 'water', quantity: 500, unit: 'ML', searchText: 'water' },
+            { name: 'flower', quantity: 200, unit: 'G', searchText: 'flower' } ],
+        equipment: { volume: 5, unit: 'L' } })
+      .end(function (err, res) {
+        assert.same(res.status, 201);
+        assert.notEqual(res.body._id, null);
         assert.end();
       });
 }); 

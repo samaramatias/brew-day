@@ -21,7 +21,6 @@
     brewRouter.get(['', '/'], function (req, res) {
         return BrewService.getBrews(_.getToken(req))
             .then(function (response) {
-                console.log('response', response);
                 return res.status(_.OK).json(response);
             })
             .catch(function (error) {
