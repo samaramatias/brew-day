@@ -12,7 +12,7 @@ var LOCK_CONFIG = {
         primaryColor: "#3F51B5"
     },
     languageDictionary: {
-        title: "Brew Day!",
+        title: "Veggie-se",
         emailInputPlaceholder: "Your email",
         passwordInputPlaceholder: "Your password",
         welcome: "Welcome, %s!"

@@ -15,9 +15,8 @@
             self.quantityUnits = {
                 'Kilograms': 'KG',
                 'Grams': 'G',
-                'Milliliters': 'ML',
-                'Liters': 'L',
-                'Gallons': 'GL'
+                'Spoon': 'SP',
+                'Tea-cup': 'TC'
             };
 
             /**
